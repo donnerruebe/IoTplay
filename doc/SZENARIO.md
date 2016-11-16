@@ -51,13 +51,16 @@ WICHTIG
 
 Wir befinden uns nun... ZUKUNFT Demo
 
+## Einkaufsliste für DIe Geräte
+
+
 # DEMO
 
 - Vorstellung der Dinge?
 
   - LED-DISPLAY mit Folientitel
   - RGB-Würfel
-  - Email-Postfach
+  - Email-Postfach (Drucker)
   - Oled Display Smartwatch?
   - Raumsensor
   - Bullshitbutton
@@ -67,3 +70,4 @@ Wir befinden uns nun... ZUKUNFT Demo
 - [ ] Presentation
 - [ ] Demo-Ablauf
 - [ ] Finalisierung / Test (2.12.16)
+- [ ] Webcam
