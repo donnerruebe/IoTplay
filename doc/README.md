@@ -19,3 +19,23 @@ Der Server ist der Kernknoten der Demo-Anwendung, er bildet folgende Funktionali
 ### RGB-Würfel
 
 "Designer-Lampe" mit zugang zum Wetzwerk. Sie kann mittels einfacher Steuerbefehle verschiedene Szenarien und Animationen anzeigen
+
+### CliMate der Raumsensor
+
+Misst Temperatur und Luftfeuchte sowie die Lichtstärke am Aufstellungsort.
+
+### Smart-OLED-Display
+
+Zeigt intelligente Daten auf einem kleinen OLED-Display an.
+
+### Mailbox.US
+
+Postkasten nach amerikanischem Vorbild; demonstriert eindrucksvoll die Anwesenheit von ungelesenen Mails durch lautes "Fahneheben"
+
+### LED-Matrix
+
+Anzeige um Texte und Informationen in großen Buchstaben zu zeigen.
+
+### Bullshitbutton
+
+Userinput für unbestimmte Zwecke
