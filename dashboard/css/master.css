@@ -7,6 +7,12 @@
        local('MaterialIcons-Regular'),url('../icons/icons.woff2') format('woff2');
 }
 
+@media only screen and (max-width : 992px) {
+  header, main, footer {
+    padding-left: 0;
+  }
+}
+
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
@@ -22,3 +28,7 @@
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
 }
+
+header, main, footer {
+      padding-left: 300px;
+    }

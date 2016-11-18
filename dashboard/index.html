@@ -4,6 +4,7 @@
   <link rel="stylesheet" href="css/materialize.min.css" media="screen">
   <link rel="stylesheet" href="css/master.css" media="screen">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <base href="/">
 </head>
 
 <body>
@@ -16,47 +17,48 @@
         <i class="material-icons">menu</i>
       </a>
     </div>
-    <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
+    <ul id="nav-mobile" class="side-nav fixed">
       <li class="logo">
-        <a id="logo-container" href="http://www.adesso.de/de/" class="brand-logo">
+        <a id="logo-container" href="HOME" class="brand-logo">
           <img src="img/navLogo.png" alt="adesso" />
         </a>
       </li>
       <li class="bold">
         <!-- TODO: About template -->
-        <a href="/about">Über uns</a>
+        <a href="ABOUT">Über uns</a>
       </li>
       <li class="bold">
         <!-- TODO: LED template -->
-        <a href="#">LED</a>
+        <a href="LED">LED</a>
       </li>
       <li class="bold">
         <!-- TODO: SERVO template -->
-        <a href="#">SERVO</a>
+        <a href="SERVO">SERVO</a>
       </li>
       <li class="bold">
         <!-- TODO: MESSAGE template -->
-        <a href="#">MESSAGE</a>
+        <a href="MESSAGE">MESSAGE</a>
       </li>
       <li class="bold">
         <!-- TODO: SOUND template -->
-        <a href="#">SOUND</a>
+        <a href="SOUND">SOUND</a>
       </li>
     </ul>
   </header>
 
-  <main ng-view>
-
+  <main ng-controller="MainCtrl" ng-view>
   </main>
 
-  <footer>
+  <footer class="page-footer">
 
   </footer>
   <script src="js/jq2-1-1.min.js" charset="utf-8"></script>
   <script src="js/materialize.min.js" charset="utf-8"></script>
   <script src="js/master.js" charset="utf-8"></script>
   <script src="js/angular.min.js"></script>
+  <script src="js/angular-route.min.js"></script>
   <script src="js/app.js"></script>
+  <script src="controller/mainCtrl.js" charset="utf-8"></script>
   <script src="controller/defCtrl.js" charset="utf-8"></script>
 </body>
 
