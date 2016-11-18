@@ -1,27 +1,32 @@
 var summitApp = angular.module('summitApp',['ngRoute']);
 
 summitApp.config(function($routeProvider, $locationProvider) {
-  $routeProvider.when('/ABOUT', {
+  $routeProvider.when('/KEKSE', {
     templateUrl: 'view/about.html',
-    controller: 'DefCtrl'
+    controller: 'AboutCtrl'
   })
   .when('/LED', {
     templateUrl: 'view/led.html',
-    controller: 'DefCtrl'
+    controller: 'LedCtrl'
   })
   .when('/SERVO', {
     templateUrl: 'view/servo.html',
-    controller: 'DefCtrl'
+    controller: 'ServoCtrl'
   })
   .when('/MESSAGE', {
     templateUrl: 'view/message.html',
-    controller: 'DefCtrl'
+    controller: 'MessageCtrl'
   })
   .when('/SOUND', {
     templateUrl: 'view/sound.html',
-    controller: 'DefCtrl'
+    controller: 'SoundCtrl'
+  })
+  .when('/SENSOR', {
+    templateUrl: 'view/sensor.html',
+    controller: 'SensorCtrl'
   })
   .otherwise({
+    controller: 'HomeCtrl',
     templateUrl: 'view/home.html'
   });
   $locationProvider.html5Mode(true);

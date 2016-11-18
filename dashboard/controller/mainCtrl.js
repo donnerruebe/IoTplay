@@ -1,3 +1,2 @@
-summitApp.controller('MainCtrl', function DefCtrl($scope) {
-
+summitApp.controller('MainCtrl', function ($scope,$rootScope) {
 });

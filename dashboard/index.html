@@ -7,10 +7,15 @@
   <base href="/">
 </head>
 
-<body>
+<body ng-controller="MainCtrl">
   <header>
     <nav class="top-nav">
+      <div class="container">
+        <div class="nav-wrapper">
+          <a class="page-title"><h3>{{ pageTitle }}</h3></a>
+        </div>
 
+      </div>
     </nav>
     <div class="container">
       <a href="#" data-activities="nav-mobile" class="button-collapse top-nav full hide-on-large-only">
@@ -25,7 +30,7 @@
       </li>
       <li class="bold">
         <!-- TODO: About template -->
-        <a href="ABOUT">Über uns</a>
+        <a href="KEKSE">Über uns</a>
       </li>
       <li class="bold">
         <!-- TODO: LED template -->
@@ -43,10 +48,14 @@
         <!-- TODO: SOUND template -->
         <a href="SOUND">SOUND</a>
       </li>
+      <li class="bold">
+        <!-- TODO: SOUND template -->
+        <a href="SENSOR">SOUND</a>
+      </li>
     </ul>
   </header>
 
-  <main ng-controller="MainCtrl" ng-view>
+  <main ng-view>
   </main>
 
   <footer class="page-footer">
@@ -59,7 +68,13 @@
   <script src="js/angular-route.min.js"></script>
   <script src="js/app.js"></script>
   <script src="controller/mainCtrl.js" charset="utf-8"></script>
-  <script src="controller/defCtrl.js" charset="utf-8"></script>
+  <script src="controller/soundCtrl.js" charset="utf-8"></script>
+  <script src="controller/servoCtrl.js" charset="utf-8"></script>
+  <script src="controller/messageCtrl.js" charset="utf-8"></script>
+  <script src="controller/sensorCtrl.js" charset="utf-8"></script>
+  <script src="controller/homeCtrl.js" charset="utf-8"></script>
+  <script src="controller/aboutCtrl.js" charset="utf-8"></script>
+  <script src="controller/ledCtrl.js" charset="utf-8"></script>
 </body>
 
 </html>

@@ -7,10 +7,8 @@
        local('MaterialIcons-Regular'),url('../icons/icons.woff2') format('woff2');
 }
 
-@media only screen and (max-width : 992px) {
-  header, main, footer {
-    padding-left: 0;
-  }
+.materialize-adesso{
+  background-color:#007bb6 !important;
 }
 
 .material-icons {
@@ -31,4 +29,20 @@
 
 header, main, footer {
       padding-left: 300px;
-    }
+}
+
+@media only screen and (max-width : 992px) {
+  header, main, footer {
+    padding-left: 0;
+  }
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
