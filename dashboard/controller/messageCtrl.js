@@ -1,4 +1,4 @@
 summitApp.controller('MessageCtrl', function($scope,$rootScope) {
 
-    $rootScope.pageTitle = 'Message'
+    $rootScope.pageTitle = 'MESSAGE BOARD'
 });

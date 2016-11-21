@@ -36,12 +36,15 @@ summitApp.config(function($routeProvider, $locationProvider) {
 summitApp.config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
-      chartColors: ['#007BB6', '#017CB7'],
+      chartColors: ['#0024FF','#007BB6', '#00FcFF'],
       responsive: true
     });
     // Configure all line charts
     ChartJsProvider.setOptions('line', {
       showLines: true
+    });
+    ChartJsProvider.setOptions('legend', {
+      display:true
     });
   }]);
 

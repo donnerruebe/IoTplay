@@ -47,4 +47,4 @@ function postData() {
 }
 
 
-setInterval(postData,100);
+setInterval(postData,300);

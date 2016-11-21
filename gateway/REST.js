@@ -3,7 +3,7 @@ var cors = require('express-cors');
 var low = require('lowdb')
 var bodyParser = require('body-parser');
 const PORT = 4567;
-const DATA_LENGTH = 100;
+const DATA_LENGTH = 50;
 const DB_NAME = 'data';
 
 var app = express();

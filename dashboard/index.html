@@ -8,7 +8,7 @@
 </head>
 
 <body ng-controller="MainCtrl">
-  <header>
+  <header class="blue">
     <nav class="top-nav">
       <div class="container">
         <div class="nav-wrapper">
@@ -18,11 +18,9 @@
       </div>
     </nav>
     <div class="container">
-      <a href="#" data-activities="nav-mobile" class="button-collapse top-nav full hide-on-large-only">
-        <i class="material-icons">menu</i>
-      </a>
+      <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only"><i class="material-icons">menu</i></a>
     </div>
-    <ul id="nav-mobile" class="side-nav fixed">
+    <ul id="slide-out" class="side-nav fixed">
       <li class="logo">
         <a id="logo-container" href="HOME" class="brand-logo">
           <img src="img/navLogo.png" alt="adesso" />
@@ -34,15 +32,15 @@
       </li>
       <li class="bold">
         <!-- TODO: LED template -->
-        <a href="LED">LED</a>
+        <a href="LED">CUBE</a>
       </li>
       <li class="bold">
         <!-- TODO: SERVO template -->
-        <a href="SERVO">SERVO</a>
+        <a href="SERVO">MAILBOX</a>
       </li>
       <li class="bold">
         <!-- TODO: MESSAGE template -->
-        <a href="MESSAGE">MESSAGE</a>
+        <a href="MESSAGE">MESSAGE BOARD</a>
       </li>
       <li class="bold">
         <!-- TODO: SOUND template -->
@@ -61,7 +59,6 @@
   </footer>
   <script src="js/jq2-1-1.min.js" charset="utf-8"></script>
   <script src="js/materialize.min.js" charset="utf-8"></script>
-  <script src="js/master.js" charset="utf-8"></script>
   <script src="js/underscore-min.js" charset="utf-8"></script>
   <script src="js/angular.min.js"></script>
   <script src="js/angular-route.min.js"></script>
@@ -69,6 +66,7 @@
   <script src="js/Chart.bundle.min.js" charset="utf-8"></script>
   <script src="js/angular-chart.min.js" charset="utf-8"></script>
   <script src="js/app.js" charset="utf-8"></script>
+  <script src="js/master.js" charset="utf-8"></script>
   <script src="controller/mainCtrl.js" charset="utf-8"></script>
   <script src="controller/soundCtrl.js" charset="utf-8"></script>
   <script src="controller/servoCtrl.js" charset="utf-8"></script>

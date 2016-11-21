@@ -1,27 +1,65 @@
-summitApp.controller('SensorCtrl', function($scope,$rootScope,$timeout,Restangular) {
+summitApp.controller('SensorCtrl', function($scope,$rootScope,Restangular,$interval) {
     $rootScope.pageTitle = 'Sensor';
-
-  Restangular.all('data').getList().then(function(result) {
+    var stop;
+    $scope.refreshData = function(){
+      Restangular.all('data').getList().then(function(result) {
         $scope.tasks = result;
-        console.log($scope.tasks);
+        var xAxisData = [];
+        var yAxisData = [];
+        var tempArr = [];
+        var feuchtArr = [];
+        var lichtArr = [];
+        var k = 0;
+        while(k<result.length){
+          var task = result[k]
+          var date = new Date(task.time);
+          var seconds = date.getSeconds();
+          var minutes = date.getMinutes();
+          var hours = date.getHours();
+          if(seconds<10){
+            seconds = "0"+seconds;
+          }
+          if(minutes<10){
+            minutes = "0"+minutes;
+          }
+          if((k % 10) == 0){
+            xAxisData.push(hours+":"+minutes+":"+seconds);
+          } else {
+            xAxisData.push('');
+          }
+          tempArr.push(task.infos.temp);
+          feuchtArr.push(task.infos.feucht);
+          lichtArr.push(task.infos.licht);
+          k++;
+        }
+        yAxisData.push(tempArr);
+        yAxisData.push(feuchtArr);
+        yAxisData.push(lichtArr);
+
+        $scope.labels = xAxisData;
+        $scope.data = yAxisData;
     });
-
-
-  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-  $scope.series = ['Series A', 'Series B'];
-  $scope.data = [
-    [65, 59, 80, 81, 56, 55, 40],
-    [28, 48, 40, 19, 86, 27, 90]
-  ];
+  }
+  $scope.refreshData();
+  $scope.startIntervall = function() {
+    if ( angular.isDefined(stop) ) return;
+    stop = $interval(function() {
+      $scope.refreshData();
+    }, 5000);
+  }
+  $scope.stopRefresh = function() {
+          if (angular.isDefined(stop)) {
+            $interval.cancel(stop);
+            stop = undefined;
+          }
+  };
+  $scope.series = ['Temperatur', 'Luftfeuchtigkeit','Lichtstärke'];
   $scope.onClick = function (points, evt) {
     console.log(points, evt);
   };
-
-  // Simulate async data update
-  $timeout(function () {
-    $scope.data = [
-      [28, 48, 40, 19, 86, 27, 90],
-      [65, 59, 80, 81, 56, 55, 40]
-    ];
-  }, 3000);
+  $scope.startIntervall();
+  $scope.$on('$destroy', function() {
+            // Make sure that the interval is destroyed too
+            $scope.stopRefresh();
+  });
 });
