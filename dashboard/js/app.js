@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-var summitApp = angular.module('summitApp',['ngRoute']);
-<<<<<<< .merge_file_a10844
-=======
-=======
+
 var summitApp = angular.module('summitApp',['ngRoute','restangular','chart.js']);
->>>>>>> afcd1756d7ba3ceffe5adb242b963e234f16877a
 
 summitApp.config(function($routeProvider, $locationProvider) {
   $routeProvider.when('/KEKSE', {
@@ -37,9 +32,6 @@ summitApp.config(function($routeProvider, $locationProvider) {
   });
   $locationProvider.html5Mode(true);
 });
-<<<<<<< HEAD
->>>>>>> .merge_file_a10984
-=======
 
 summitApp.config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts
@@ -58,4 +50,3 @@ summitApp.config(function(RestangularProvider) {
           'http://localhost:4567');
           // Note that we run everything on the localhost
   });
->>>>>>> afcd1756d7ba3ceffe5adb242b963e234f16877a
