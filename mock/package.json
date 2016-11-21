@@ -1,0 +1,11 @@
+{
+  "name": "mock",
+  "version": "1.0.0",
+  "description": "Mockservice to mock some data for the REST-Application",
+  "main": "start.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "author": "Mader",
+  "license": "ISC"
+}

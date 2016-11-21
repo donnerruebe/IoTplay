@@ -1,4 +1,4 @@
-var summitApp = angular.module('summitApp',['ngRoute']);
+var summitApp = angular.module('summitApp',['ngRoute','restangular','chart.js']);
 
 summitApp.config(function($routeProvider, $locationProvider) {
   $routeProvider.when('/KEKSE', {
@@ -31,3 +31,21 @@ summitApp.config(function($routeProvider, $locationProvider) {
   });
   $locationProvider.html5Mode(true);
 });
+
+summitApp.config(['ChartJsProvider', function (ChartJsProvider) {
+    // Configure all charts
+    ChartJsProvider.setOptions({
+      chartColors: ['#007BB6', '#017CB7'],
+      responsive: true
+    });
+    // Configure all line charts
+    ChartJsProvider.setOptions('line', {
+      showLines: true
+    });
+  }]);
+
+summitApp.config(function(RestangularProvider) {
+      RestangularProvider.setBaseUrl(
+          'http://localhost:4567');
+          // Note that we run everything on the localhost
+  });
