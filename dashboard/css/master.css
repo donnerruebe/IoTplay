@@ -7,6 +7,13 @@
        local('MaterialIcons-Regular'),url('../icons/icons.woff2') format('woff2');
 }
 
+<<<<<<< .merge_file_a09476
+=======
+.materialize-adesso{
+  background-color:#007bb6 !important;
+}
+
+>>>>>>> .merge_file_a08836
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
@@ -22,3 +29,26 @@
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
 }
+<<<<<<< .merge_file_a09476
+=======
+
+header, main, footer {
+      padding-left: 300px;
+}
+
+@media only screen and (max-width : 992px) {
+  header, main, footer {
+    padding-left: 0;
+  }
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+>>>>>>> .merge_file_a08836

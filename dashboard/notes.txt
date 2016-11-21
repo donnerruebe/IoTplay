@@ -1,1 +1,5 @@
 Design: Weiß hintergrund ansonsten 007bb6
+<<<<<<< .merge_file_a02804
+=======
+adesso far: blue adesso
+>>>>>>> .merge_file_a06488
