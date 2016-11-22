@@ -23,10 +23,11 @@ summitApp.controller('SensorCtrl', function($scope,$rootScope,Restangular,$inter
             minutes = "0"+minutes;
           }
           if((k % 10) == 0){
-            xAxisData.push(hours+":"+minutes+":"+seconds);
+            //xAxisData.push(hours+":"+minutes+":"+seconds);
           } else {
-            xAxisData.push('');
+            //xAxisData.push('');
           }
+          xAxisData.push(result.length-k);
           tempArr.push(task.infos.temp);
           feuchtArr.push(task.infos.feucht);
           lichtArr.push(task.infos.licht);

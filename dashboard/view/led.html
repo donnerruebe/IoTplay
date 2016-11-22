@@ -1,3 +1,46 @@
 <div class="container">
   <h1>LED</h1>
+  <div id="bulb" class="row center-align" ng-style="customStyle.style">
+             @@@@@<br>
+        @@@@@@@@@@@@@@@@<br>
+      @@@@@@@@@@@@@@@@@@@@@@<br>
+   @@@@@@@@@@@@@@@@@@@@@@@@@<br>
+  @@@@@@@@@@@@@@@@@@@@@@@@@@@<br>
+  @@@@@@@@@@@@@@@@@@@@@@@@@@@<br>
+  @@@@@@@@@@@@@@@@@@@@@@@@@@@<br>
+   @@@@@@@@@@@@@@@@@@@@@@@@@<br>
+    @@@@@@@@@@@@@@@@@@@@@@@<br>
+      @@@@@@@@@@@@@@@@@@@<br>
+        @@@@@@@@@@@@@@@<br>
+          @@@@@@@@@@@<br>
+           @ @<br>
+            @@@@@@@<br>
+            @@@@@@@<br>
+  </div>
+  <div class="row">
+    <div class="col s4 red-text">
+      RED <input type="number" id="redColor" ng-change="changeColor()" ng-model="red" value="">
+    </div>
+    <div class=" col s4 green-text">
+      GREEN <input type="number" ng-model="green" ng-change="changeColor()" value="">
+    </div>
+    <div class="col s4 blue-text">
+      Blue <input type="number" ng-model="blue" ng-change="changeColor()" value="">
+    </div>
+  </div>
+  <div class="row center-align">
+      Welche LED soll gefärbt werden?
+  </div>
+  <div class="row">
+    <button class="btn waves-effect waves-light" ng-click="sendColor(0)" type="submit" id="led1">LED 1
+    </button>
+    <button class="btn waves-effect waves-light" ng-click="sendColor(1)" type="submit" id="led2">LED 2
+    </button>
+    <button class="btn waves-effect waves-light" ng-click="sendColor(2)" type="submit" id="led3">LED 3
+    </button>
+    <button class="btn waves-effect waves-light" ng-click="sendColor(3)" type="submit" id="led4">LED 4
+    </button>
+    <button class="btn waves-effect waves-light" ng-click="sendColor(4)" type="submit" id="led5">LED 5
+    </button>
+  </div>
 </div>

@@ -2,6 +2,7 @@ var express = require('express');
 var cors = require('express-cors');
 var low = require('lowdb')
 var bodyParser = require('body-parser');
+var player = require('play-sound')(opts = {})
 const PORT = 4567;
 const DATA_LENGTH = 50;
 const DB_NAME = 'data';
@@ -42,6 +43,23 @@ app.post('/data',function(req, res) {
   db.get(DB_NAME).push(data).value();
   res.send();
 });
+
+app.post('/message', function(req, res){
+  console.log(req.body);
+  res.send();
+});
+
+app.post('/led', function(req, res){
+  console.log(req.body);
+  res.send();
+});
+
+app.get('/sound',function(req, res){
+  player.play('foo.mp3', function(err){
+    if (err) throw err
+  });
+  res.send();
+})
 
 app.listen(PORT, function () {
   console.log('This app is listening on port '+PORT);
