@@ -7,6 +7,7 @@ const PORT = 4567;
 const DATA_LENGTH = 50;
 const DB_NAME = 'data';
 
+var audio;
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -54,10 +55,21 @@ app.post('/led', function(req, res){
   res.send();
 });
 
-app.get('/sound',function(req, res){
-  player.play('foo.mp3', function(err){
-    if (err) throw err
+app.get('/play',function(req, res){
+  if(audio){
+    audio.kill();
+  }
+  audio = player.play('foo.mp3', function(err){
+    if (err) console.log('Error, but it shouldn\'t be bad at all');
   });
+  res.send();
+})
+
+app.get('/stop',function(req, res){
+  if(audio){
+    audio.kill();
+    audio = null;
+  }
   res.send();
 })
 
