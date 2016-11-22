@@ -1,6 +1,6 @@
 summitApp.controller('LedCtrl', function($scope,$rootScope,Restangular) {
 
-  $rootScope.pageTitle = 'CUBE1'
+  $rootScope.pageTitle = 'CUBE'
   $scope.red = 0;
   $scope.green = 123;
   $scope.blue = 182;

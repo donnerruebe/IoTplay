@@ -46,7 +46,7 @@ summitApp.controller('SensorCtrl', function($scope,$rootScope,Restangular,$inter
     if ( angular.isDefined(stop) ) return;
     stop = $interval(function() {
       $scope.refreshData();
-    }, 5000);
+    }, 1000);
   }
   $scope.stopRefresh = function() {
           if (angular.isDefined(stop)) {
