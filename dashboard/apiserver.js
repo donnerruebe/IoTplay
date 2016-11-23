@@ -32,6 +32,20 @@ app.get('/rest/data/latest', function(req, res) {
 });
 })
 
+app.get('/rest/led', function(req, res) {
+  console.log(req);
+  request({
+  uri: "http://127.0.0.1:4567/ledCube/color",
+  method: "PUT",
+  timeout: 1000,
+  formData:{r:1,g:2,b:3}
+  }, function(error, response, body) {
+  var obj=JSON.parse(body);
+  res.send(obj[obj.length-1]);
+  //console.log(obj[obj.length-1]);
+});
+})
+
 
 app.listen(8080, function() {
     console.log('Example app listening on port 8080!')

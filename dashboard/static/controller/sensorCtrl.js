@@ -16,7 +16,7 @@ summitApp.controller('SensorCtrl', function($scope, $rootScope, Restangular, $in
     $scope.refreshData = function() {
         Restangular.one("data").one("latest").get().then(function(res) {
           var time = dateFormatter(res.time);
-            if(time.slice(-1) != "0"){time="";}// zeigt nur volle 10 Sekunden labels
+            //if(time.slice(-1) != "0"){time="";}// zeigt nur volle 10 Sekunden labels
             $scope.labels.push(time);
             $scope.data[0].push(res.infos.temp);
             $scope.data[1].push(res.infos.feucht);
@@ -42,7 +42,7 @@ summitApp.controller('SensorCtrl', function($scope, $rootScope, Restangular, $in
             while (i<result.length){
                 var item = result[i];
                 var time = dateFormatter(item.time);
-                if(time.slice(-1) != "0"){time="";}// zeigt nur volle 10 Sekunden labels
+                //if(time.slice(-1) != "0"){time="";}// zeigt nur volle 10 Sekunden labels
                 labels.push(time);
                 tempArr.push(item.infos.temp);
                 feuchtArr.push(item.infos.feucht);
