@@ -12,7 +12,9 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "express-cors": "0.0.3",
+    "g": "^2.0.1",
     "lowdb": "^0.14.0",
-    "play-sound": "^1.1.1"
+    "play-sound": "^1.1.1",
+    "request": "^2.79.0"
   }
 }

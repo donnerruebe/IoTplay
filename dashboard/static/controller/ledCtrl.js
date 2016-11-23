@@ -69,7 +69,7 @@ summitApp.controller('LedCtrl', function($scope, $rootScope, Restangular) {
             'green': checkColor($scope.green),
             'blue': checkColor($scope.blue)
         }
-        Restangular.all('led').post(message).then(function(result) {
+        Restangular.one('led').all('rgb').post(message).then(function(result) {
             console.log('done');
         });
     };
