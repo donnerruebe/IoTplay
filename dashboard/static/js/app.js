@@ -50,6 +50,6 @@ summitApp.config(['ChartJsProvider', function (ChartJsProvider) {
 
 summitApp.config(function(RestangularProvider) {
       RestangularProvider.setBaseUrl(
-          'http://localhost:4567');
+          '/rest');
           // Note that we run everything on the localhost
   });

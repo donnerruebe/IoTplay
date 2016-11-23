@@ -1,0 +1,28 @@
+{
+  "name": "dashboard",
+  "version": "1.0.0",
+  "description": "Api-Adapterserver für Summit16Demo",
+  "main": "apiserver.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/donnerruebe/adessoSummIT16.git"
+  },
+  "keywords": [
+    "Dashboard",
+    "API",
+    "IoT"
+  ],
+  "author": "donnerruebe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/donnerruebe/adessoSummIT16/issues"
+  },
+  "homepage": "https://github.com/donnerruebe/adessoSummIT16#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "request": "^2.79.0"
+  }
+}
