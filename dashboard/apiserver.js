@@ -1,8 +1,10 @@
-var express = require('express')
+var express = require('express');
+var bodyParser = require('body-parser');
 var request = require("request");
 var app = express()
 
-app.use(express.static('static'))
+app.use(express.static('static'));
+app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
     res.send('Hello World!')
@@ -32,18 +34,19 @@ app.get('/rest/data/latest', function(req, res) {
 });
 })
 
-app.get('/rest/led', function(req, res) {
-  console.log(req);
+app.post('/rest/led/', function(req, res) {
+  console.log(req.body);
   request({
   uri: "http://127.0.0.1:4567/ledCube/color",
   method: "PUT",
   timeout: 1000,
   formData:{r:1,g:2,b:3}
   }, function(error, response, body) {
-  var obj=JSON.parse(body);
-  res.send(obj[obj.length-1]);
+  //var obj=JSON.parse(body);
   //console.log(obj[obj.length-1]);
 });
+
+res.send('ok');
 })
 
 
