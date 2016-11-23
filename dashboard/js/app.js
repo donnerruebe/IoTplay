@@ -1,5 +1,5 @@
 
-var summitApp = angular.module('summitApp',['ngRoute','restangular','chart.js']);
+var summitApp = angular.module('summitApp',['ngRoute','restangular','chart.js','mp.colorPicker' ]);
 
 summitApp.config(function($routeProvider, $locationProvider) {
   $routeProvider.when('/KEKSE', {
@@ -30,7 +30,7 @@ summitApp.config(function($routeProvider, $locationProvider) {
     controller: 'HomeCtrl',
     templateUrl: 'view/home.html'
   });
-  $locationProvider.html5Mode(true);
+  //$locationProvider.html5Mode(true);
 });
 
 summitApp.config(['ChartJsProvider', function (ChartJsProvider) {

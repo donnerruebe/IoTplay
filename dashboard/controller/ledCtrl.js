@@ -17,6 +17,30 @@ summitApp.controller('LedCtrl', function($scope,$rootScope,Restangular) {
     return color;
   }
 
+  function hex2rgba_convert(hex){
+   hex = hex.replace('#','');
+   r = parseInt(hex.substring(0,2), 16);
+   g = parseInt(hex.substring(2,4), 16);
+   b = parseInt(hex.substring(4,6), 16);
+
+   result = {
+     r:r,
+     g:g,
+     b:b,
+   }
+   return result;
+  }
+  $scope.$watch('color', function(newValue, oldValue) {
+    if(newValue){
+    var rgb=hex2rgba_convert(newValue);
+    $scope.red=rgb.r;
+    $scope.green=rgb.g;
+    $scope.blue=rgb.b;
+
+    console.log(rgb);
+    $scope.changeColor();}
+  });
+
   $scope.changeColor = function (){
     var red = 0;
     var blue = 0;
