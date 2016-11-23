@@ -50,6 +50,11 @@ app.post('/message', function(req, res){
   res.send();
 });
 
+app.post('/servo', function(req, res){
+  console.log(req.body);
+  res.send();
+});
+
 app.post('/led', function(req, res){
   console.log(req.body);
   res.send();
@@ -63,7 +68,7 @@ app.get('/play',function(req, res){
     if (err) console.log('Error, but it shouldn\'t be bad at all');
   });
   res.send();
-})
+});
 
 app.get('/stop',function(req, res){
   if(audio){
@@ -71,7 +76,7 @@ app.get('/stop',function(req, res){
     audio = null;
   }
   res.send();
-})
+});
 
 app.listen(PORT, function () {
   console.log('This app is listening on port '+PORT);

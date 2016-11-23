@@ -1,15 +1,55 @@
 <div class="container">
-  <div class="row">
-    <div class="col s12">
+  <div class="card row">
+    <div class="card-content">
       <h4>Want to play a bit Sound? Das kannst du hier versuchen ;)</h4>
     </div>
   </div>
-  <div class="row center-align">
-    <div class="col s6">
-      <a class="btn-floating btn-large waves-effect waves-light red" ng-click="play()"><i class="material-icons">play_arrow</i></a>
+  <div class="row">
+    <div class="card col s3">
+      <div class="card-content center-align">
+        Das Ende ist nah!
+      </div>
+      <div class="card-action center-align">
+          <a class="btn-floating btn-large waves-effect waves-light red" ng-click="play()"><i class="material-icons">play_arrow</i></a>
+      </div>
     </div>
-    <div class="col s6">
-      <a class="btn-floating btn-large waves-effect waves-light red" ng-click="stop()"><i class="material-icons">stop</i></a>
+
+      <div class="card col s3">
+        <div class="card-content center-align">
+          Dueldie, dudelei...
+        </div>
+        <div class="card-action center-align">
+            <a class="btn-floating btn-large waves-effect waves-light red" ng-click="play()"><i class="material-icons">play_arrow</i></a>
+        </div>
+      </div>
+
+        <div class="card col s3">
+          <div class="card-content center-align">
+            BOOOM, BOOOM!
+          </div>
+          <div class="card-action center-align">
+              <a class="btn-floating btn-large waves-effect waves-light red" ng-click="play()"><i class="material-icons">play_arrow</i></a>
+          </div>
+        </div>
+
+          <div class="card col s3">
+            <div class="card-content center-align">
+              Lalalalala lalala lalalala
+            </div>
+            <div class="card-action center-align">
+                <a class="btn-floating btn-large waves-effect waves-light red" ng-click="play()"><i class="material-icons">play_arrow</i></a>
+            </div>
+          </div>
+
+  </div>
+  <div class="row">
+    <div class="card">
+      <div class="card-action row">
+            <button class="btn waves-effect waves-light red col s2 offset-s5" ng-click="stop()" id="messageSubmit">
+              Stop
+              <i class="material-icons right">stop</i>
+            </button>
+      </div>
     </div>
   </div>
 </div>

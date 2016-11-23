@@ -2,3 +2,22 @@ Design: Weiß hintergrund ansonsten 007bb6
 26a69a ausgetauscht mit 00c0ff
 2bbbad ausgetauscht mit 00c0ff
 1d7d74 ausgetauscht mit 005983
+
+
+//Teil von led.html
+<div class="row center-align">
+  <div class="card">
+    <div class="card-content">
+      <div class="col s12">
+        Welche LED soll gefärbt werden?
+      </div>
+    </div>
+    <div class="card-action">
+      <button class="btn waves-effect waves-light" ng-click="sendColor(0)" type="submit" id="led1">1</button>
+      <button class="btn waves-effect waves-light" ng-click="sendColor(1)" type="submit" id="led2">2</button>
+      <button class="btn waves-effect waves-light" ng-click="sendColor(2)" type="submit" id="led3">3</button>
+      <button class="btn waves-effect waves-light" ng-click="sendColor(3)" type="submit" id="led4">4</button>
+      <button class="btn waves-effect waves-light" ng-click="sendColor(4)" type="submit" id="led5">5</button>
+    </div>
+  </div>
+</div>

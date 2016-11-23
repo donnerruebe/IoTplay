@@ -1,21 +1,21 @@
 <div class="container">
-  <div class="row">
-    Moin moin, hier kannst du deine Nachricht an die LED-Leiste bringen.
+  <div class="row card">
+    <div class="card-content">
+          <h4>Moin moin, hier kannst du deine Nachricht an die LED-Leiste bringen.</h4>
+    </div>
   </div>
-  <div class="row">
-    <form class="col s12" ng-submit="sendMessage()">
-      <div class="row">
-        <div class="input-field col s12">
-          <i class="material-icons prefix">mode_edit</i>
-          <textarea id="messageContainer" class="materialize-textarea" ng-model="messageTextArea"></textarea>
-          <label for="messageContainer">Deine Nachricht</label>
+      <div class="row card">
+        <div class="card-content row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">mode_edit</i>
+            <textarea id="messageContainer" class="materialize-textarea" ng-model="messageTextArea"></textarea>
+            <label for="messageContainer">Deine Nachricht</label>
+          </div>
         </div>
+          <div class="card-action">
+              <button class="btn waves-effect waves-light" ng-click="sendMessage()" id="messageSubmit">Submit
+                <i class="material-icons right">send</i>
+              </button>
+          </div>
       </div>
-      <div class="row">
-        <button class="btn waves-effect waves-light" type="submit" id="messageSubmit">Submit
-          <i class="material-icons right">send</i>
-        </button>
-      </div>
-    </form>
-  </div>
 </div>

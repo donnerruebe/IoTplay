@@ -5,45 +5,35 @@
             @@<br>
         </h5>
     </div>
-
-    <div class="row">
-        <div class="col m6">
-            <color-picker ng-model="color" ng-init="color = '#007BB6'"></color-picker>
-        </div>
-        <div class="col m6">
-            <div class="col s12 red-text">
-                RED
-                <input type="number" id="redColor" ng-change="changeColor()" ng-model="red" value="">
-            </div>
-            <div class=" col s12 green-text">
-                GREEN
-                <input type="number" ng-model="green" ng-change="changeColor()" value="">
-            </div>
-            <div class="col s12 blue-text">
-                Blue
-                <input type="number" ng-model="blue" ng-change="changeColor()" value="">
-            </div>
-        </div>
-
+    <div class="row card valign-wrapper">
+      <div class="card-content">
+        <h4>Lass die LEDs in deiner Farbe leuchten.</h4>
+      </div>
     </div>
-    <div class="row center-align">
-        Welche LED soll gefärbt werden?
+    <div class="row valign-wrapper">
+            <div class="valign s12 m6">
+                <color-picker ng-model="color" ng-init="color = '#007BB6'"></color-picker>
+            </div>
+      <div class="card col m6">
+        <div class="col s12 red-text">
+            RED
+            <input type="number" id="redColor" ng-change="changeColor()" ng-model="red" value="" readonly>
+        </div>
+        <div class=" col s12 green-text">
+            GREEN
+            <input type="number" ng-model="green" ng-change="changeColor()" value="" readonly>
+        </div>
+        <div class="col s12 blue-text">
+            Blue
+            <input type="number" ng-model="blue" ng-change="changeColor()" value="" readonly>
+        </div>
+      </div>
     </div>
-    <div class="row center-align">
-        <div class="col s6 m2 offset-m1">
-            <button class="btn waves-effect waves-light" ng-click="sendColor(0)" type="submit" id="led1">1</button>
-        </div>
-        <div class="col s6 m2">
-            <button class="btn waves-effect waves-light" ng-click="sendColor(1)" type="submit" id="led2">2</button>
-        </div>
-        <div class="col s6 m2">
-            <button class="btn waves-effect waves-light" ng-click="sendColor(2)" type="submit" id="led3">3</button>
-        </div>
-        <div class="col s6 m2">
-            <button class="btn waves-effect waves-light" ng-click="sendColor(3)" type="submit" id="led4">4</button>
-        </div>
-        <div class="col s12 m2">
-            <button class="btn waves-effect waves-light" ng-click="sendColor(4)" type="submit" id="led5">5</button>
-        </div>
+</div>
+  <div class="container">
+    <div class="row card">
+      <div class="col s2 offset-s5">
+        <p class="valign"><button class="btn waves-effect waves-light valign" ng-click="sendColor()" type="submit" id="led">Farbe setzen</button></p>
+      </div>
     </div>
 </div>
