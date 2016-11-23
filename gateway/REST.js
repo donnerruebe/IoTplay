@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var devices={};
 
-devices.LEDCUBE={url:"127.0.0.1:1000"};
+devices.LEDCUBE={url:"192.168.137.44"};
 
 const db = low();
 db.set(DB_NAME,[]).value();
@@ -67,13 +67,14 @@ app.put('/ledCube/color', function(req, res){
   r=req.body.r||0;
   g=req.body.g||0;
   b=req.body.b||0;
-  param="r="+r+",g="+g+",b="+b;
+  param="r="+r+"&g="+g+"&b="+b;
+  console.log("http://"+devices.LEDCUBE.url+"/rgb?"+param);
   request({
-  uri: "http://"+devices.LEDCUBE.url+"/rgb?"+param,
+  uri: "http://"+devices.LEDCUBE.url+"/led/rgb?"+param,
   method: "GET",
   timeout: 1000,
 }, function(error, response, body) {
-  console.log(error||response);
+  //console.log(error||response);
   //console.log(obj[obj.length-1]);
 });
 });
