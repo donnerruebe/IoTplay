@@ -17,15 +17,20 @@ summitApp.controller('SensorCtrl', function($scope, $rootScope, Restangular, $in
         Restangular.one("data").one("latest").get().then(function(res) {
           var time = dateFormatter(res.time);
             //if(time.slice(-1) != "0"){time="";}// zeigt nur volle 10 Sekunden labels
-            $scope.labels.push(time);
-            $scope.data[0].push(res.infos.temp);
-            $scope.data[1].push(res.infos.feucht);
-            $scope.data[2].push(res.infos.licht);
 
-            $scope.labels.shift();
-            $scope.data[0].shift();
-            $scope.data[1].shift();
-            $scope.data[2].shift();
+            if(res.infos.temp && res.infos.feucht && res.infos.licht && time){
+
+              $scope.labels.push(time);
+              $scope.data[0].push(res.infos.temp);
+              $scope.data[1].push(res.infos.feucht);
+              $scope.data[2].push(res.infos.licht);
+
+              $scope.labels.shift();
+              $scope.data[0].shift();
+              $scope.data[1].shift();
+              $scope.data[2].shift();
+            }
+
 
         });
 
@@ -54,6 +59,9 @@ summitApp.controller('SensorCtrl', function($scope, $rootScope, Restangular, $in
             yAxisData[0]=(tempArr);
             yAxisData[1]=(feuchtArr);
             yAxisData[2]=(lichtArr);
+            if (labels.length == 0) {
+              labels = [0];
+            }
             $scope.labels = labels;
             $scope.data = yAxisData;
         });

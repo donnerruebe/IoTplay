@@ -28,8 +28,12 @@ app.get('/rest/data/latest', function(req, res) {
         method: "GET",
         timeout: 1000,
     }, function(error, response, body) {
-        var obj = JSON.parse(body);
-        res.send(obj[obj.length - 1]);
+      var result = {};
+        if (body) {
+          obj = JSON.parse(body);
+          result = obj[obj.length - 1];
+        }
+        res.send(result);
         //console.log(obj[obj.length-1]);
     });
 });
