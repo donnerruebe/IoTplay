@@ -1,6 +1,7 @@
 summitApp.controller('SensorCtrl', function($scope, $rootScope, Restangular, $interval) {
     $rootScope.pageTitle = 'Sensor';
     var stop;
+    var MAX_DATASETS = 50;
     var dateFormatter = function(timestamp) {
         var t = new Date(timestamp);
         var hh = t.getHours();
@@ -25,10 +26,12 @@ summitApp.controller('SensorCtrl', function($scope, $rootScope, Restangular, $in
               $scope.data[1].push(res.infos.feucht);
               $scope.data[2].push(res.infos.licht);
 
-              $scope.labels.shift();
-              $scope.data[0].shift();
-              $scope.data[1].shift();
-              $scope.data[2].shift();
+              if ($scope.labels.length > MAX_DATASETS) {
+                $scope.labels.shift();
+                $scope.data[0].shift();
+                $scope.data[1].shift();
+                $scope.data[2].shift();
+              }
             }
 
 
@@ -61,6 +64,7 @@ summitApp.controller('SensorCtrl', function($scope, $rootScope, Restangular, $in
             yAxisData[2]=(lichtArr);
             if (labels.length == 0) {
               labels = [0];
+              yAxisData = [[0],[0],[0]]
             }
             $scope.labels = labels;
             $scope.data = yAxisData;

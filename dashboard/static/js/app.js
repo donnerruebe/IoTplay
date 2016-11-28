@@ -37,7 +37,8 @@ summitApp.config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
       chartColors: ['#0024FF','#007BB6', '#00FcFF'],
-      responsive: true
+      responsive: true,
+      animation : false
     });
     // Configure all line charts
     ChartJsProvider.setOptions('line', {
