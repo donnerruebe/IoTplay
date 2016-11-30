@@ -4,12 +4,17 @@ var request = require("request");
 var app = express()
 
 app.use(express.static('static'));
+app.use("/folien",express.static('../doc/reveal'));
 app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
     res.send('Hello World!')
 })
 
+app.get('/talk/folie/:msg', function(req, res) {
+  console.log(req.params);
+  res.send(req.params);
+})
 
 app.get('/rest/data/', function(req, res) {
     request({
