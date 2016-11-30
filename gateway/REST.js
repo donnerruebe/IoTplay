@@ -52,14 +52,18 @@ app.post('/data',function(req, res) {
 });
 
 app.get('/sensor/data',function(req, res) {
+  if(req.query){
   var data = {
     'time':Date.now(),
-    'infos':req.query
+    'infos':{}
   }
+  data.infos.temp=req.query.temp;
+  data.infos.feucht=req.query.humid;
+  data.infos.licht=req.query.light;
 
   console.log(data);
   db.get(DB_NAME).push(data).value();
-  res.send("OK");
+  res.send("OK");}else{res.send("NOT-OK");}
 });
 
 app.post('/message', function(req, res){
