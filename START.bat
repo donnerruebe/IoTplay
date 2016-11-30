@@ -9,6 +9,6 @@ echo "DASHBOARD-gestartet"
 cd ..
 
 cd mock
-start node start.js
+#start node start.js
 echo "MOCKSEVICE-gestartet"
 cd ..

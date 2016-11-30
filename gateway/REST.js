@@ -21,6 +21,11 @@ devices.LEDCUBE={url:"192.168.137.44"};
 const db = low();
 db.set(DB_NAME,[]).value();
 
+app.use(function (req, res, next) {
+  console.log('Time: %d', Date.now(), "from",req.host);
+  next();
+});
+
 /**
 * for application to get data
 */
@@ -44,6 +49,17 @@ app.post('/data',function(req, res) {
   console.log(data);
   db.get(DB_NAME).push(data).value();
   res.send();
+});
+
+app.get('/sensor/data',function(req, res) {
+  var data = {
+    'time':Date.now(),
+    'infos':req.query
+  }
+
+  console.log(data);
+  db.get(DB_NAME).push(data).value();
+  res.send("OK");
 });
 
 app.post('/message', function(req, res){
