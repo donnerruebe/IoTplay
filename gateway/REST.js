@@ -10,6 +10,31 @@ const DB_NAME = 'data';
 
 var audio;
 var app = express();
+
+/* IOT SYNC
+
+const dgram = require('dgram');
+const server = dgram.createSocket('udp4');
+
+server.on('error', (err) => {
+  console.log(`server error:\n${err.stack}`);
+  server.close();
+});
+
+server.on('message', (msg, rinfo) => {
+  console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+});
+
+server.on('listening', () => {
+  var address = server.address();
+  console.log(`server listening ${address.address}:${address.port}`);
+});
+
+server.bind(8239);
+// server listening 0.0.0.0:8239
+
+// END IOTSYNC*/
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -59,7 +84,7 @@ app.get('/sensor/data',function(req, res) {
   }
   data.infos.temp=req.query.temp;
   data.infos.feucht=req.query.humid;
-  data.infos.licht=req.query.light;
+  data.infos.licht=req.query.light*0.01;
 
   console.log(data);
   db.get(DB_NAME).push(data).value();
