@@ -1,15 +1,15 @@
-summitApp.controller('SoundCtrl', function($scope,$rootScope,Restangular) {
+summitApp.controller('SoundCtrl', function($scope,$rootScope,$http,BASE_URL) {
 
     $rootScope.pageTitle = 'Sound';
 
     $scope.play = function(){
-      Restangular.all('play').getList().then(function(result) {
+      $http.get(BASE_URL+'/play').then(function(result) {
         console.log('done');
       });
     };
 
     $scope.stop = function(){
-      Restangular.all('stop').getList().then(function(result) {
+      $http.get(BASE_URL+'/stop').then(function(result) {
         console.log('done');
       });
     };

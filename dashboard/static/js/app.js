@@ -1,5 +1,7 @@
 
-var summitApp = angular.module('summitApp',['ngRoute','restangular','chart.js','mp.colorPicker' ]);
+var summitApp = angular.module('summitApp',['ngRoute','chart.js','mp.colorPicker' ]);
+
+summitApp.constant('BASE_URL','/rest');
 
 summitApp.config(function($routeProvider, $locationProvider) {
   $routeProvider.when('/KEKSE', {
@@ -49,18 +51,48 @@ summitApp.config(['ChartJsProvider', function (ChartJsProvider) {
     });
   }]);
 
-summitApp.config(function(RestangularProvider) {
-      RestangularProvider.setBaseUrl(
-          '/rest');
-          // Note that we run everything on the localhost
-  });
-
-summitApp.factory('SensorService', function($interval,Restangular){
+summitApp.factory('SensorService', function($interval,$http,BASE_URL){
   var sensorData = {};
   sensorData.xAxis = [0];
-  sensorData.yAxis = [[0],[0],[0]]
+  sensorData.yAxis = [[0],[0],[0]];
   sensorData.MAX_DATASETS = 30;
   sensorData.series = ['Temperatur', 'Luftfeuchtigkeit', 'Lichtstärke'];
+
+  sensorData.initSensorData = function() {
+    $http.get(BASE_URL+'/data').then(function(res){
+      var data = res.data;
+      if(!data){
+        return;
+      }
+      var k = 0;
+      if(k<data.length){
+        sensorData.xAxis = [];
+        sensorData.yAxis = [[],[],[]];
+      }
+      while(k<data.length){
+        var elem = data[k];
+        var time = sensorData.dateFormatter(elem.time);
+          //if(time.slice(-1) != "0"){time="";}// zeigt nur volle 10 Sekunden labels
+          if(elem.infos.temp && elem.infos.feucht && elem.infos.licht && time){
+
+            sensorData.xAxis.push(time);
+            sensorData.yAxis[0].push(elem.infos.temp);
+            sensorData.yAxis[1].push(elem.infos.feucht);
+            sensorData.yAxis[2].push(elem.infos.licht);
+
+            if (sensorData.xAxis.length > sensorData.MAX_DATASETS) {
+              sensorData.xAxis.shift();
+              sensorData.yAxis[0].shift();
+              sensorData.yAxis[1].shift();
+              sensorData.yAxis[2].shift();
+            }
+          }
+        k++;
+      }
+    });
+  }
+
+  sensorData.initSensorData();
 
   sensorData.dateFormatter = function(timestamp) {
       var t = new Date(timestamp);
@@ -74,11 +106,15 @@ summitApp.factory('SensorService', function($interval,Restangular){
       return hh + ":" + mm + ":" + ss;
   }
 
+
   sensorData.refreshData = function() {
-      Restangular.one("data").one("latest").get().then(function(res) {
+    $http.get(BASE_URL+"/data/latest")
+      .then(function(res) {
+        res = res.data;
         var time = sensorData.dateFormatter(res.time);
           //if(time.slice(-1) != "0"){time="";}// zeigt nur volle 10 Sekunden labels
 
+          console.log(res);
           if(res.infos.temp && res.infos.feucht && res.infos.licht && time){
 
             sensorData.xAxis.push(time);

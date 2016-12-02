@@ -1,4 +1,4 @@
-summitApp.controller('SensorCtrl', function($scope, $rootScope, Restangular, $interval, SensorService) {
+summitApp.controller('SensorCtrl', function($scope, $rootScope, $interval, SensorService) {
     $rootScope.pageTitle = 'Sensor';
 
     $scope.labels = SensorService.xAxis;
