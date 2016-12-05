@@ -1,8 +1,5 @@
-summitApp.controller('HomeCtrl', function($scope,$rootScope,SensorService) {
+summitApp.controller('HomeCtrl', function($scope,$rootScope,SensorService,$interval) {
     $rootScope.pageTitle = 'Home, sweet home..'
-    $scope.labels = angular.copy(SensorService.xAxis);
-    $scope.data = angular.copy(SensorService.yAxis);
-    $scope.series = angular.copy(SensorService.series);
 
     var opts = {
       lines: 12, // The number of lines to draw
@@ -20,21 +17,49 @@ summitApp.controller('HomeCtrl', function($scope,$rootScope,SensorService) {
       generateGradient: true
 };
 var luftG = document.getElementById('luftgauge'); // your canvas element
-var luftgauge = new Gauge(luftG).setOptions(opts); // create sexy gauge!
-luftgauge.maxValue = 3000; // set max gauge value
-luftgauge.animationSpeed = 32; // set animation speed (32 is default value)
-luftgauge.set(1250); // set actual value
+$scope.luftgauge = new Gauge(luftG).setOptions(opts); // create sexy gauge!
+$scope.luftgauge.maxValue = 100; // set max gauge value
+$scope.luftgauge.animationSpeed = 1; // set animation speed (32 is default value)
+$scope.luftgauge.set(SensorService.lastFeucht); // set actual value
 
 var tempG = document.getElementById('tempgauge'); // your canvas element
-var tempgauge = new Gauge(tempG).setOptions(opts); // create sexy gauge!
-tempgauge.maxValue = 3000; // set max gauge value
-tempgauge.animationSpeed = 32; // set animation speed (32 is default value)
-tempgauge.set(1250); // set actual value
+$scope.tempgauge = new Gauge(tempG).setOptions(opts); // create sexy gauge!
+$scope.tempgauge.maxValue = 60; // set max gauge value
+$scope.tempgauge.animationSpeed = 1; // set animation speed (32 is default value)
+$scope.tempgauge.set(SensorService.lastTemp); // set actual value
 
 var lichtG = document.getElementById('lichtgauge'); // your canvas element
-var lichtgauge = new Gauge(lichtG).setOptions(opts); // create sexy gauge!
-lichtgauge.maxValue = 3000; // set max gauge value
-lichtgauge.animationSpeed = 32; // set animation speed (32 is default value)
-lichtgauge.set(1250); // set actual value
+$scope.lichtgauge = new Gauge(lichtG).setOptions(opts); // create sexy gauge!
+$scope.lichtgauge.maxValue = 1000; // set max gauge value
+$scope.lichtgauge.animationSpeed = 1; // set animation speed (32 is default value)
+$scope.lichtgauge.set(SensorService.lastLicht); // set actual value
 
+
+$scope.labels = SensorService.xAxis;
+$scope.data = SensorService.yAxis;
+$scope.series = SensorService.series;
+
+$scope.refreshData = function () {
+  $scope.lichtLatest = SensorService.lastLicht;
+  $scope.feuchtLatest = SensorService.lastFeucht;
+  $scope.tempLatest = SensorService.lastTemp;
+  $scope.lichtgauge.set(SensorService.lastLicht); // set actual value
+  $scope.luftgauge.set(SensorService.lastFeucht); // set actual value
+  $scope.tempgauge.set(SensorService.lastTemp); // set actual value
+}
+
+$scope.startIntervall = function() {
+    if (angular.isDefined($scope.dataInterval)) return;
+    $scope.dataInterval = $interval(function() {
+        $scope.refreshData();
+    }, 1000);
+}
+
+$scope.stopRefresh = function() {
+    if (angular.isDefined($scope.dataInterval)) {
+        $interval.cancel($scope.dataInterval);
+        $scope.dataInterval = undefined;
+    }
+};
+$scope.startIntervall();
 });
