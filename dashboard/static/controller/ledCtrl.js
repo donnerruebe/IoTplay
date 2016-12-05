@@ -1,4 +1,4 @@
-summitApp.controller('LedCtrl', function($scope, $rootScope,$http,BASE_URL) {
+summitApp.controller('LedCtrl', function($scope, $rootScope, Restangular) {
 
     $rootScope.pageTitle = 'CUBE'
     $scope.red = 0;
@@ -69,7 +69,7 @@ summitApp.controller('LedCtrl', function($scope, $rootScope,$http,BASE_URL) {
             'green': checkColor($scope.green),
             'blue': checkColor($scope.blue)
         }
-        $http.post(BASE_URL+'/led/rgb', message).then(function(result) {
+        Restangular.one('led').all('rgb').post(message).then(function(result) {
             console.log('done');
         });
     };
