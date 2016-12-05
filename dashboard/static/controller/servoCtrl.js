@@ -1,4 +1,4 @@
-summitApp.controller('ServoCtrl', function($scope,$rootScope,Restangular) {
+summitApp.controller('ServoCtrl', function($scope,$rootScope,$http,BASE_URL) {
 
     $rootScope.pageTitle = 'MAILBOX'
 
@@ -10,7 +10,7 @@ summitApp.controller('ServoCtrl', function($scope,$rootScope,Restangular) {
         'name':$scope.mailboxName,
         'text':$scope.mailboxTextArea
       }
-      Restangular.all('servo').post(message).then(function(result) {
+      $http.post(BASE_URL+'/servo', message).then(function(result) {
         console.log('done');
         $scope.mailboxTextArea = '';
       });
