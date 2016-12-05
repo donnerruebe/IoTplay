@@ -5,15 +5,33 @@
       <div class="card hoverable">
         <div class="card-content">
           <div class="row">
-            <span class="card-title">SENSOR</span>
-            <div class="gauge col s4">
-              <canvas id="lichtgauge" width="300" height="300"></canvas>
+            <span class="card-title col s12">SENSOR</span>
+            <div class="gauge col s4 center">
+              <div class="">
+                Lichtstärke
+              </div>
+              <canvas id="lichtgauge" width="100%" height="80%"></canvas>
+              <div class="">
+                {{lichtLatest}}
+              </div>
             </div>
-            <div class="gauge col s4">
-              <canvas id="luftgauge" width="300" height="300"></canvas>
+            <div class="gauge col s4 center">
+              <div class="">
+                Luftfeuchtigkeit
+              </div>
+              <canvas id="luftgauge" width="100%" height="80%"></canvas>
+              <div class="">
+                {{feuchtLatest}}
+              </div>
             </div>
-            <div class="gauge col s4">
-              <canvas id="tempgauge" width="300" height="300"></canvas>
+            <div class="gauge col s4 center">
+              <div class="">
+                Temperatur
+              </div>
+              <canvas id="tempgauge" width="100%" height="80%"></canvas>
+              <div class="">
+                {{tempLatest}}
+              </div>
             </div>
             <canvas id="line" class="chart chart-line col s12" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick">
             </canvas>

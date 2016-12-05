@@ -38,7 +38,7 @@ summitApp.config(function($routeProvider, $locationProvider) {
 summitApp.config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
-      chartColors: ['#0024FF','#007BB6', '#00FcFF'],
+      chartColors: ['#007BB6', '#0024FF','#00FcFF'],
       responsive: true,
       animation : false
     });
@@ -57,6 +57,9 @@ summitApp.factory('SensorService', function($interval,$http,BASE_URL){
   sensorData.yAxis = [[0],[0],[0]];
   sensorData.MAX_DATASETS = 30;
   sensorData.series = ['Temperatur', 'Luftfeuchtigkeit', 'Lichtstärke'];
+  sensorData.lastTemp =0;
+  sensorData.lastFeucht =0;
+  sensorData.lastLicht =0;
 
   sensorData.initSensorData = function() {
     $http.get(BASE_URL+'/data').then(function(res){
@@ -65,10 +68,6 @@ summitApp.factory('SensorService', function($interval,$http,BASE_URL){
         return;
       }
       var k = 0;
-      if(k<data.length){
-        sensorData.xAxis = [];
-        sensorData.yAxis = [[],[],[]];
-      }
       while(k<data.length){
         var elem = data[k];
         var time = sensorData.dateFormatter(elem.time);
@@ -92,8 +91,6 @@ summitApp.factory('SensorService', function($interval,$http,BASE_URL){
     });
   }
 
-  sensorData.initSensorData();
-
   sensorData.dateFormatter = function(timestamp) {
       var t = new Date(timestamp);
       var hh = t.getHours();
@@ -107,20 +104,26 @@ summitApp.factory('SensorService', function($interval,$http,BASE_URL){
   }
 
 
+  sensorData.initSensorData();
+
   sensorData.refreshData = function() {
     $http.get(BASE_URL+"/data/latest")
       .then(function(res) {
         res = res.data;
         var time = sensorData.dateFormatter(res.time);
           //if(time.slice(-1) != "0"){time="";}// zeigt nur volle 10 Sekunden labels
-
-          console.log(res);
           if(res.infos.temp && res.infos.feucht && res.infos.licht && time){
 
             sensorData.xAxis.push(time);
             sensorData.yAxis[0].push(res.infos.temp);
             sensorData.yAxis[1].push(res.infos.feucht);
             sensorData.yAxis[2].push(res.infos.licht);
+
+            sensorData.lastTemp = res.infos.temp;
+            sensorData.lastFeucht =res.infos.feucht;
+            sensorData.lastLicht =res.infos.licht;
+
+            console.log(sensorData.lastTemp);
 
             if (sensorData.xAxis.length > sensorData.MAX_DATASETS) {
               sensorData.xAxis.shift();
@@ -136,18 +139,19 @@ summitApp.factory('SensorService', function($interval,$http,BASE_URL){
   }
 
   sensorData.startIntervall = function() {
-      if (angular.isDefined(this.dataInterval)) return;
-      sensorData.dataInterval = $interval(function() {
+      if (angular.isDefined(sensorData.sensordataInterval)) return;
+      sensorData.sensordataInterval = $interval(function() {
           sensorData.refreshData();
       }, 1000);
   }
 
   sensorData.stopRefresh = function() {
-      if (angular.isDefined(this.dataInterval)) {
-          $interval.cancel(this.dataInterval);
-          this.dataInterval = undefined;
+      if (angular.isDefined(sensorData.sensordataInterval)) {
+           $interval.cancel(sensorData.sensordataInterval);
+          sensorData.sensordataInterval = undefined;
       }
   };
   sensorData.startIntervall();
+
   return sensorData;
 });

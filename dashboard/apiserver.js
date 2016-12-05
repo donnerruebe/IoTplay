@@ -80,6 +80,8 @@ app.post('/rest/led/switch', function(req, res) {
 })
 
 
-app.listen(8080, function() {
+var server = app.listen(8080, function() {
     console.log('Example app listening on port 8080!')
 })
+
+module.exports = server;
