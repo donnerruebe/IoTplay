@@ -1,4 +1,4 @@
-summitApp.controller('HomeCtrl', function($scope,$rootScope,SensorService,$interval) {
+summitApp.controller('HomeCtrl', function($scope,$rootScope,UserService,SensorService,$interval,UserService) {
     $rootScope.pageTitle = 'Home, sweet home..'
 
     var opts = {
@@ -16,6 +16,16 @@ summitApp.controller('HomeCtrl', function($scope,$rootScope,SensorService,$inter
       strokeColor: '#E0E0E0',   // to see which ones work best for you
       generateGradient: true
 };
+
+var promise = UserService.getPermission();
+promise.then(function(success) {
+  $scope.permission = success.permission;
+    console.log("Permission");
+    console.log($scope.permission);
+}, function(err) {
+  console.log(err);
+});
+
 var luftG = document.getElementById('luftgauge'); // your canvas element
 $scope.luftgauge = new Gauge(luftG).setOptions(opts); // create sexy gauge!
 $scope.luftgauge.maxValue = 100; // set max gauge value

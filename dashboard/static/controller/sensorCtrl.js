@@ -1,5 +1,12 @@
-summitApp.controller('SensorCtrl', function($scope, $rootScope, Restangular, $interval,SensorService) {
+summitApp.controller('SensorCtrl', function($scope,UserService, $rootScope,SensorService) {
     $rootScope.pageTitle = 'Sensor';
+
+    var promise = UserService.getPermission();
+    promise.then(function (succ) {
+      $scope.isAllowed = succ.permission.data;
+    }, function () {
+      console.log("No response from the server");
+    });
     var stop;
     var MAX_DATASETS = 50;
     var dateFormatter = function(timestamp) {
@@ -7,6 +14,7 @@ summitApp.controller('SensorCtrl', function($scope, $rootScope, Restangular, $in
         var hh = t.getHours();
         var mm = t.getMinutes();
         var ss = t.getSeconds();
+    }
 
     $scope.labels = SensorService.xAxis;
     $scope.data2 = [SensorService.yAxis[1]];

@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col s12">
+    <div class="col s12" ng-show="permission.data">
       <a href="#/SENSOR">
       <div class="card hoverable">
         <div class="card-content">
@@ -40,9 +40,7 @@
         </div>
       </a>
     </div>
-  </div>
-  <div class="row">
-        <div class="col s12 m6">
+        <div class="col s12 m6" ng-if="permission.led">
           <a href="#/LED">
           <div class="card hoverable">
             <div class="card-content">
@@ -52,7 +50,7 @@
           </div>
         </a>
         </div>
-        <div class="col s12 m6">
+        <div class="col s12 m6" ng-if="permission.message">
           <a href="#/MESSAGE">
           <div class="card hoverable">
             <div class="card-content">
@@ -62,9 +60,7 @@
           </div>
         </a>
         </div>
-      </div>
-      <div class="row">
-        <div class="col s12 m6">
+        <div class="col s12 m6" ng-if="permission.servo">
           <a href="#/SERVO">
           <div class="card hoverable">
             <div class="card-content">
@@ -74,9 +70,7 @@
           </div>
           </a>
         </div>
-      </div>
-      <div class="row">
-        <div class="col s12 m6">
+        <div class="col s12 m6" ng-if="permission.sound">
           <a href="#/SOUND">
           <div class="card hoverable">
             <div class="card-content">

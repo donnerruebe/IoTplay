@@ -1,10 +1,11 @@
 <div class="container">
-    <div id="bulb" class="row center-align" ng-if="0==1">
-        <h5 ng-style="customStyle.style">
-            @@<br>
-            @@<br>
-        </h5>
+  <div class="row" ng-if="!isAllowed">
+  <div class="card">
+    <div class="card-content">
+      <h5 class="red-text">Du hast leider nur die Erlaubnis diese Seite anzugucken. Auch wenn du Buttons siehst, wird dir ein Klick darauf nichts nützen. Die Funktionen stehen für dich nicht zur Verfügung</h5>
     </div>
+  </div>
+</div>
     <div class="row card valign-wrapper">
       <div class="card-content">
         <h4>Lass die LEDs in deiner Farbe leuchten.</h4>

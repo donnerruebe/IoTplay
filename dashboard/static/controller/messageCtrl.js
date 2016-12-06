@@ -1,8 +1,13 @@
-summitApp.controller('MessageCtrl', function($scope,$rootScope,$http,BASE_URL) {
+summitApp.controller('MessageCtrl', function($scope,UserService,$rootScope,$http,BASE_URL) {
 
     $rootScope.pageTitle = 'MESSAGE BOARD';
     $scope.messageTextArea = '';
-
+    var promise = UserService.getPermission();
+    promise.then(function (succ) {
+      $scope.isAllowed = succ.permission.message;
+    }, function () {
+      console.log("No response from the server");
+    });
     $scope.sendMessage = function() {
       if(!$scope.messageTextArea) return;
       var message = {

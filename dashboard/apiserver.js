@@ -1,22 +1,69 @@
 var express = require('express');
+var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var request = require("request");
+var crypto = require('crypto');
 var app = express()
 
+var userRights = {
+  led:false,
+  message:false,
+  servo:false,
+  data:false,
+  sound:false,
+  changeRights:false
+}
+
+var adminRights = {
+    led:true,
+    message:true,
+    servo:true,
+    data:true,
+    sound:true,
+    changeRights:true
+}
+
+var adminCookies = [];
+const COOKIE_NAME = 'summadmin'
+
+app.use(cookieParser());
 app.use(express.static('static'));
 app.use("/folien",express.static('../doc/reveal'));
 app.use(bodyParser.json());
+
+function isAdmin(req) {
+  if(req.cookies.summadmin){
+    var cookie = req.cookies.summadmin;
+    if((adminCookies.indexOf(cookie)>=0)){
+      return true;
+    }
+  }
+  return false;
+}
+
+function sha256(data) {
+    return crypto.createHash("sha256").update(data).digest("base64");
+}
 
 app.get('/', function(req, res) {
     res.send('Hello World!')
 })
 
 app.get('/talk/folie/:msg', function(req, res) {
+  if (!(isAdmin(req) || userRights.changeRights)) {
+    res.status(418).send('I’m a teapot');
+    return;
+  }
   console.log(req.params);
   res.send(req.params);
 })
 
 app.get('/rest/data/', function(req, res) {
+  if (!((isAdmin(req) && adminRights.data) || userRights.data)) {
+    res.status(418).send('I’m a teapot');
+    return;
+  }
+
     request({
         uri: "http://127.0.0.1:4567/data",
         method: "GET",
@@ -28,6 +75,12 @@ app.get('/rest/data/', function(req, res) {
 })
 
 app.get('/rest/data/latest', function(req, res) {
+  if (!((isAdmin(req) && adminRights.data) || userRights.data)) {
+    res.status(418).send('I’m a teapot');
+    return;
+  }
+
+
     request({
         uri: "http://127.0.0.1:4567/data",
         method: "GET",
@@ -44,6 +97,12 @@ app.get('/rest/data/latest', function(req, res) {
 });
 
 app.post('/rest/led/rgb', function(req, res) {
+
+  if (!((isAdmin(req) && adminRights.led) || userRights.led)) {
+    res.status(418).send('I’m a teapot');
+    return;
+  }
+
     console.log(req.body);
     var c = req.body
     request({
@@ -61,7 +120,19 @@ app.post('/rest/led/rgb', function(req, res) {
     });
 });
 
+app.get('/rest/soeren/hicookie',function(req,res) {
+  var cookie = sha256(Date.now().toString());
+  adminCookies.push(cookie);
+  res.cookie(COOKIE_NAME,cookie, { maxAge: 900000, httpOnly: true });
+  res.redirect('/');
+});
+
 app.post('/rest/led/switch', function(req, res) {
+
+  if (!((isAdmin(req) && adminRights.led) || userRights.led)) {
+    res.status(418).send('I’m a teapot');
+    return;
+  }
     console.log(req.body);
     var state = req.body.state;
     request({
@@ -77,8 +148,31 @@ app.post('/rest/led/switch', function(req, res) {
     });
 
     res.send('ok');
-})
+});
 
+app.get('/rest/isAllowed', function(req,res){
+  if (isAdmin(req)) {
+    res.send(adminRights);
+  } else {
+    res.send(userRights);
+  }
+});
+
+app.get('/rest/user/rights', function(req,res){
+    res.send(userRights);
+});
+
+app.post('/rest/user/rights', function(req,res){
+  if (!((isAdmin(req) && adminRights.changeRights)  || userRights.changeRights)) {
+    res.status(418).send('I’m a teapot');
+    return;
+  }
+  var data = req.body;
+  if(data){
+    userRights = data;
+  }
+  res.send();
+});
 
 var server = app.listen(8080, function() {
     console.log('Example app listening on port 8080!')

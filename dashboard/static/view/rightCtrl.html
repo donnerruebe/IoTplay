@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row">
+    <div class="col s12" ng-if="!isAllowed">
+      <h3>Sry dude, but u ain't got the things to do this!</h3>
+    </div>
+    <div class="card hoverable col s12" ng-if="isAllowed">
+      <div class="card-content">
+        <div class="row">
+          <h3 class="col s12">Settings</h3>
+          <p class="col s12">
+            <input type="checkbox" id="led" ng-model="permission.led" ng-click="sendData()"/>
+            <label for="led">Able to send new Colors to the LED?</label>
+          </p>
+          <p class="col s12">
+            <input type="checkbox" id="message" ng-model="permission.message" ng-click="sendData()"/>
+            <label for="message">Able to send a Message to the Message board?</label>
+          </p>
+          <p class="col s12">
+            <input type="checkbox" id="servo" ng-model="permission.servo" ng-click="sendData()"/>
+            <label for="servo">Able to send a Message to the Mailbox?</label>
+          </p>
+          <p class="col s12">
+            <input type="checkbox" id="data" ng-model="permission.data" ng-click="sendData()"/>
+            <label for="data">Able to look at the Data?</label>
+          </p>
+          <p class="col s12">
+            <input type="checkbox" id="sound" ng-model="permission.sound" ng-click="sendData()"/>
+            <label for="sound">Able to play sound?</label>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

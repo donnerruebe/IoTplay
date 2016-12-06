@@ -28,6 +28,10 @@ summitApp.config(function($routeProvider, $locationProvider) {
     templateUrl: 'view/sensor.html',
     controller: 'SensorCtrl'
   })
+  .when('/RIGHTS', {
+    templateUrl: 'view/rightCtrl.html',
+    controller: 'RightCtrl'
+  })
   .otherwise({
     controller: 'HomeCtrl',
     templateUrl: 'view/home.html'
@@ -123,8 +127,6 @@ summitApp.factory('SensorService', function($interval,$http,BASE_URL){
             sensorData.lastFeucht =res.infos.feucht;
             sensorData.lastLicht =res.infos.licht;
 
-            console.log(sensorData.lastTemp);
-
             if (sensorData.xAxis.length > sensorData.MAX_DATASETS) {
               sensorData.xAxis.shift();
               sensorData.yAxis[0].shift();
@@ -134,7 +136,9 @@ summitApp.factory('SensorService', function($interval,$http,BASE_URL){
           }
 
 
-      });
+      }, function errorCallback(response) {
+        console.log("Ouch, thre was an error.");
+    });
 
   }
 
@@ -155,3 +159,20 @@ summitApp.factory('SensorService', function($interval,$http,BASE_URL){
 
   return sensorData;
 });
+
+summitApp.service('UserService',function($http,BASE_URL,$q) {
+  var userService = {};
+
+  userService.getPermission = function() {
+    return $q(function(resolve, reject) {
+      $http.get(BASE_URL+'/isAllowed').then(function(res) {
+        var data = res.data;
+        userService.permission = data;
+        resolve(userService);
+      },function() {
+        reject("Ouch an error")
+      })
+    });
+  }
+  return userService;
+})

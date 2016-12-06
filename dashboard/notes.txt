@@ -21,3 +21,6 @@ Design: Weiß hintergrund ansonsten 007bb6
     </div>
   </div>
 </div>
+
+
+API-cookie hinzufügen. bad request hinzufügen abfangen in angular

@@ -1,9 +1,15 @@
-summitApp.controller('LedCtrl', function($scope, $rootScope, Restangular) {
+summitApp.controller('LedCtrl', function($scope,UserService, $rootScope) {
 
     $rootScope.pageTitle = 'CUBE'
     $scope.red = 0;
     $scope.green = 123;
     $scope.blue = 182;
+    var promise = UserService.getPermission();
+    promise.then(function (succ) {
+      $scope.isAllowed = succ.permission.led;
+    }, function () {
+      console.log("No response from the server");
+    });
 
     $scope.customStyle = {};
 
@@ -36,8 +42,6 @@ summitApp.controller('LedCtrl', function($scope, $rootScope, Restangular) {
             $scope.red = rgb.r;
             $scope.green = rgb.g;
             $scope.blue = rgb.b;
-
-            console.log(rgb);
             $scope.changeColor();
         }
     });
