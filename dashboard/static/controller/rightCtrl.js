@@ -1,7 +1,7 @@
 summitApp.controller('RightCtrl', function ($scope,$rootScope,UserService,$http,BASE_URL) {
   $rootScope.pageTitle = 'Rechte Verteilung';
 
-  var promise = UserService;
+  var promise = UserService.getPermission();
   promise.then(function (succ) {
     $scope.isAllowed = succ.permission.changeRights;
   }, function () {
