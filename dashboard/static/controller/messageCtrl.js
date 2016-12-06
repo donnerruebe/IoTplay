@@ -11,7 +11,7 @@ summitApp.controller('MessageCtrl', function($scope,UserService,$rootScope,$http
     $scope.sendMessage = function() {
       if(!$scope.messageTextArea) return;
       var message = {
-        'text':$scope.messageTextArea
+        text:$scope.messageTextArea
       }
       $http.post(BASE_URL+'/message',message).then(function(result) {
         console.log('done');

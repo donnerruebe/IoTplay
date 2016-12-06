@@ -8,8 +8,11 @@ summitApp.controller('SoundCtrl', function($scope,UserService,$rootScope,$http,B
     }, function () {
       console.log("No response from the server");
     });
-    $scope.play = function(){
-      $http.get(BASE_URL+'/play').then(function(result) {
+    $scope.play = function(value){
+      if(value == undefined || !(Number.isInteger(value)) || !(value <= 3 && value >=0  ) ){
+        return;
+      }
+      $http.get(BASE_URL+'/play/'+value).then(function(result) {
         console.log('done');
       });
     };

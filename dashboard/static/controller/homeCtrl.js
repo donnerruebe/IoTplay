@@ -20,8 +20,6 @@ summitApp.controller('HomeCtrl', function($scope,$rootScope,UserService,SensorSe
 var promise = UserService.getPermission();
 promise.then(function(success) {
   $scope.permission = success.permission;
-    console.log("Permission");
-    console.log($scope.permission);
 }, function(err) {
   console.log(err);
 });

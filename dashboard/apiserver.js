@@ -24,7 +24,8 @@ var adminRights = {
 }
 
 var adminCookies = [];
-const COOKIE_NAME = 'summadmin'
+const COOKIE_NAME = 'summadmin';
+const GATEWAY = "http://127.0.0.1:4567";
 
 app.use(cookieParser());
 app.use(express.static('static'));
@@ -65,7 +66,7 @@ app.get('/rest/data/', function(req, res) {
   }
 
     request({
-        uri: "http://127.0.0.1:4567/data",
+        uri: GATEWAY+"/data",
         method: "GET",
         timeout: 1000,
     }, function(error, response, body) {
@@ -82,7 +83,7 @@ app.get('/rest/data/latest', function(req, res) {
 
 
     request({
-        uri: "http://127.0.0.1:4567/data",
+        uri: GATEWAY+"/data",
         method: "GET",
         timeout: 1000,
     }, function(error, response, body) {
@@ -106,7 +107,7 @@ app.post('/rest/led/rgb', function(req, res) {
     console.log(req.body);
     var c = req.body
     request({
-        uri: "http://127.0.0.1:4567/ledCube/color",
+        uri: GATEWAY+"/ledCube/color",
         method: "PUT",
         timeout: 1000,
         json: {
@@ -136,7 +137,7 @@ app.post('/rest/led/switch', function(req, res) {
     console.log(req.body);
     var state = req.body.state;
     request({
-        uri: "http://127.0.0.1:4567/ledCube/switch",
+        uri: GATEWAY+"/ledCube/switch",
         method: "PUT",
         timeout: 1000,
         json: {
@@ -173,6 +174,59 @@ app.post('/rest/user/rights', function(req,res){
   }
   res.send();
 });
+
+app.get('/rest/stop', function(req,res) {
+  request({
+      uri: GATEWAY+"/stopMusic",
+      method: "GET",
+      timeout: 1000
+  }, function(error, response, body) {
+      //var obj=JSON.parse(body);
+      //console.log(obj[obj.length-1]);
+  });
+  res.send();
+});
+
+app.get('/rest/play/:num',function(req,res) {
+  var num = req.params.num;
+  request({
+      uri: GATEWAY+"/playMusic/"+num,
+      method: "GET",
+      timeout: 1000
+  }, function(error, response, body) {
+      //var obj=JSON.parse(body);
+      //console.log(obj[obj.length-1]);
+  });
+  res.send();
+})
+
+app.post('/rest/message', function(req,res) {
+  var data = req.body;
+  request({
+      uri: GATEWAY+"/messageboard",
+      method: "POST",
+      timeout: 1000,
+      data: data
+  }, function(error, response, body) {
+      //var obj=JSON.parse(body);
+      //console.log(obj[obj.length-1]);
+  });
+  res.send();
+})
+
+app.post('/rest/servo', function(req,res) {
+  var data = req.body;
+  request({
+      uri: GATEWAY+"/mailbox",
+      method: "POST",
+      timeout: 1000,
+      data: data
+  }, function(error, response, body) {
+      //var obj=JSON.parse(body);
+      //console.log(obj[obj.length-1]);
+  });
+  res.send();
+})
 
 var server = app.listen(8080, function() {
     console.log('Example app listening on port 8080!')

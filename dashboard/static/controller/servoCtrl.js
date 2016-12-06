@@ -10,14 +10,17 @@ summitApp.controller('ServoCtrl', function($scope,UserService,$rootScope,$http,B
       console.log("No response from the server");
     });
     $scope.sendMessage = function() {
-      if(!$scope.mailboxTextArea) return;
+      if((!$scope.mailboxTextArea) || !$scope.mailboxName) return;
       var message = {
-        'name':$scope.mailboxName,
-        'text':$scope.mailboxTextArea
+        name:$scope.mailboxName,
+        text:$scope.mailboxTextArea,
+        timestamp:Date.now()
       }
       $http.post(BASE_URL+'/servo', message).then(function(result) {
         console.log('done');
         $scope.mailboxTextArea = '';
       });
+      $scope.mailboxName = "";
+      $scope.mailboxTextArea = "";
     }
 });
