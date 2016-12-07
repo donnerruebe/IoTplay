@@ -15,6 +15,12 @@
 
 #include <Servo.h>
 
+#include "SoftwareSerial.h" // FROM https://github.com/plerup/espsoftwareserial
+
+#include "wificred.h" // wifiMulti.addAP("SSID", "PSK");
+
+SoftwareSerial swSer(14, 12, false, 256);
+
 ESP8266WebServer server(80);
 
 #define SERVO 15
@@ -42,10 +48,9 @@ void setup() {
 
   USE_SERIAL.println("SETUP");
   delay(200);
-  wifiMulti.addAP("Vogelnest", "wlanaccessatruebeshome");
-  wifiMulti.addAP("Teilnehmer", "zwzukunft");
-  wifiMulti.addAP("FritzOttermoor", "georgherrmannottermoorshrott");
-  wifiMulti.addAP("summit16IOT", "iotdemowlan");
+  
+  FirstAP1
+  FirstAP4
 
   USE_SERIAL.println();
   USE_SERIAL.println();
