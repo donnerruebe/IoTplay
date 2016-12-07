@@ -50,6 +50,25 @@
 
   </div>
   <div class="row">
+    <div class="card col s12">
+      <div class="card-content row">
+        <div class="col s12">
+          Etwas aus der Collection :D
+        </div>
+        <div class="input-field col s12">
+          <select ng-model="select">
+            <option value="" disabled selected>Welchen titel?</option>
+            <option  ng-repeat="x in buttonSongs" value="{{x}}">{{x}}</option>
+          </select>
+          <label>Such dir was aus</label>
+        </div>
+      </div>
+      <div class="card-action center">
+        <a class="btn waves-effect waves-light red" ng-click="play(4)"><i class="material-icons">play_arrow</i></a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="card">
       <div class="card-action row">
             <button class="btn waves-effect waves-light red col s2 offset-s5" ng-click="stop()" id="messageSubmit">

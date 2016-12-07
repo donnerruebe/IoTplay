@@ -1,6 +1,8 @@
-summitApp.controller('SoundCtrl', function($scope,UserService,$rootScope,$http,BASE_URL) {
+summitApp.controller('SoundCtrl', function($scope,UserService,$rootScope,$http,BASE_URL,$timeout) {
 
     $rootScope.pageTitle = 'Sound';
+
+    $scope.buttonSongs = [];
 
     var promise = UserService.getPermission();
     promise.then(function (succ) {
@@ -8,11 +10,23 @@ summitApp.controller('SoundCtrl', function($scope,UserService,$rootScope,$http,B
     }, function () {
       console.log("No response from the server");
     });
+
     $scope.play = function(value){
-      if(value == undefined || !(Number.isInteger(value)) || !(value <= 3 && value >=0  ) ){
+      if(value == undefined || !(Number.isInteger(value)) || !(value <= 4 && value >=0  ) ){
         return;
       }
-      $http.get(BASE_URL+'/play/'+value).then(function(result) {
+      var songname;
+      if (value > 3) {
+        if($scope.select == undefined){
+        return;
+        }
+        songname = $scope.select;
+
+      } else {
+        songname = $scope.buttonSongs[value];
+      }
+      console.log(songname);
+      $http.get(BASE_URL+'/play/'+songname).then(function(result) {
         console.log('done');
       });
     };
@@ -22,4 +36,14 @@ summitApp.controller('SoundCtrl', function($scope,UserService,$rootScope,$http,B
         console.log('done');
       });
     };
+
+    $scope.updateDropdown = function(list) {
+      this.buttonSongs = list;
+    }
+
+    $timeout(function () {
+        $('select').material_select();
+    });
+
+    $scope.updateDropdown( ['132.mp3','465.mp3','798.mp3','noe.mp3']);
 });
