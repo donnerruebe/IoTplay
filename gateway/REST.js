@@ -91,7 +91,7 @@ app.get('/sensor/data',function(req, res) {
   res.send("OK");}else{res.send("NOT-OK");}
 });
 
-app.post('/message', function(req, res){
+app.post('/messagedisplay', function(req, res){
   console.log(req.body);
   res.send();
 });
@@ -108,7 +108,6 @@ app.post('/led', function(req, res){
 
 app.put('/ledCube/color', function(req, res){
   console.log(req.body);
-  res.send();
   r=req.body.r||0;
   g=req.body.g||0;
   b=req.body.b||0;
@@ -121,11 +120,12 @@ app.put('/ledCube/color', function(req, res){
 }, function(error, response, body) {
   //console.log(error||response);
   //console.log(obj[obj.length-1]);
+  res.send();
 });
 });
 
 app.put('/ledCube/switch', function(req, res){
-  console.log(req.body);
+  conapp.put('/ledCube/switch', function(req, res) {sole.log(req.body);
   res.send();
   var state="off";
   if(req.body.state=="on"){
