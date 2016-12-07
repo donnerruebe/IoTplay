@@ -1,15 +1,7 @@
-summitApp.controller('ServoCtrl', function($scope,UserService,$rootScope,$http,BASE_URL) {
+fragenApp.controller('MainCtrl', function ($scope,$rootScope,$http,BASE_URL) {
+  $rootScope.pageTitle = "Stell uns deine Frage";
 
-    $rootScope.pageTitle = 'MAILBOX'
-
-    $scope.mailboxTextArea = '';
-    var promise = UserService.getPermission();
-    promise.then(function (succ) {
-      $scope.isAllowed = succ.permission.servo;
-    }, function () {
-      console.log("No response from the server");
-    });
-    $scope.hasData = false;
+  $scope.hasData = false;
   $scope.messages = [];
 
   $scope.sendMessage = function() {
@@ -39,6 +31,7 @@ summitApp.controller('ServoCtrl', function($scope,UserService,$rootScope,$http,B
         }
       });
     }
-
+    
     $scope.updateMessages();
+
 });
