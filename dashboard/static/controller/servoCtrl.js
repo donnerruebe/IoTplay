@@ -32,10 +32,12 @@ summitApp.controller('ServoCtrl', function($scope,UserService,$rootScope,$http,B
     $scope.updateMessages = function() {
       $http.get(BASE_URL+'/servo').then(function(result) {
         var data = result.data;
+
+        console.log(data);
         if(Array.isArray(data) &&  data.length>0){
           $scope.hasData = true;
           $scope.messages = data;
-
+          console.log(data);
         }
       });
     }

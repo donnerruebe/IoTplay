@@ -9,6 +9,21 @@ const DB_NAME = 'DB_Sensordaten';
 const db = low();
 db.set(DB_NAME,[]).value();
 
+var init= function(){
+  var data = {
+    'time':Date.now(),
+    'infos':{}
+  }
+data.infos.temp=25;
+data.infos.feucht=25;
+data.infos.licht=100*0.01;
+
+console.log(data);
+db.get(DB_NAME).push(data).value();
+}
+
+init();
+
 router.get('/', function (req, res) {
   res.send("SENSOR");
 });

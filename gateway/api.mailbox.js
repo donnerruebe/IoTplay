@@ -13,6 +13,16 @@ const DB_NAME = 'DB_Mailbox';
 const db = low();
 db.set(DB_NAME, []).value();
 
+var init= function(){
+  db.get(DB_NAME).push({
+    sender: "SummitTest",
+    subject: "subjektiv",
+    message: "eine tolle Lange Nachricht an den CHef"
+  }).value();
+  console.log(db.get(DB_NAME).value());
+}
+
+init();
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
   console.log('Time: ', Date.now());
@@ -52,6 +62,7 @@ router.put('/mail', function(req, res) {
 });
 
 router.get('/mails', function(req, res) {
+  console.log("MailAbfrage");
   var data = db.get(DB_NAME).value();
   res.send(data);
 });

@@ -7,8 +7,8 @@ var app = express()
 
 var userRights = {
   led:false,
-  message:false,
-  servo:false,
+  age:false,
+  servo:true,
   data:false,
   sound:false,
   changeRights:false
@@ -16,12 +16,13 @@ var userRights = {
 
 var adminRights = {
     led:true,
-    message:true,
+    age:true,
     servo:true,
     data:true,
     sound:true,
     changeRights:true
 }
+userRights=adminRights;
 
 var adminCookies = [];
 const COOKIE_NAME = 'summadmin';
@@ -60,7 +61,7 @@ app.get('/talk/folie/:msg', function(req, res) {
     uri:GATEWAY+'/messageboard/text',
     method:'PUT',
     timeout:1000,
-    data:{
+    json:{
       text:msg
     }
   }, function(error,response,body) {
@@ -265,7 +266,7 @@ app.post('/rest/message', function(req,res) {
       uri: GATEWAY+"/messageboard/text/",
       method: "PUT",
       timeout: 1000,
-      data: data
+      json: data
   }, function(error, response, body) {
       //var obj=JSON.parse(body);
       //console.log(obj[obj.length-1]);
@@ -292,7 +293,7 @@ app.post('/rest/servo', function(req,res) {
       uri: GATEWAY+"/mailbox/question/",
       method: "PUT",
       timeout: 1000,
-      data: data
+      json: data
   }, function(error, response, body) {
     if (error) {
       console.log(error);
@@ -311,7 +312,7 @@ app.get('/rest/servo', function(req,res) {
       res.send();
       return;
     }
-
+    body=JSON.parse(body);
     if (body.length>20){
       body = body.slice(Math.max(body.length - 20))
     }
