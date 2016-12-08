@@ -66,7 +66,7 @@ app.get('/rest/data/', function(req, res) {
   }
 
     request({
-        uri: GATEWAY+"/data",
+        uri: GATEWAY+"/sensor/data",
         method: "GET",
         timeout: 1000,
     }, function(error, response, body) {
@@ -83,7 +83,7 @@ app.get('/rest/data/latest', function(req, res) {
 
 
     request({
-        uri: GATEWAY+"/data",
+        uri: GATEWAY+"/sensor/data",
         method: "GET",
         timeout: 1000,
     }, function(error, response, body) {
@@ -119,6 +119,26 @@ app.post('/rest/led/rgb', function(req, res) {
         //var obj=JSON.parse(body);
         //console.log(obj[obj.length-1]);
     });
+    res.send();
+});
+
+app.get('/rest/led/rgb', function(req, res) {
+
+  if (!((isAdmin(req) && adminRights.led) || userRights.led)) {
+    res.status(418).send('I’m a teapot');
+    return;
+  }
+    request({
+        uri: GATEWAY+"/ledCube/color",
+        method: "GET",
+        timeout: 1000
+    }, function(error, response, body) {
+      if (error) {
+        res.send();
+        return;
+      }
+      res.send(body);
+    });
 });
 
 app.get('/rest/soeren/hicookie',function(req,res) {
@@ -138,7 +158,7 @@ app.post('/rest/led/switch', function(req, res) {
     var state = req.body.state;
     request({
         uri: GATEWAY+"/ledCube/switch",
-        method: "PUT",
+        method: "POST",
         timeout: 1000,
         json: {
             state: state
@@ -177,8 +197,8 @@ app.post('/rest/user/rights', function(req,res){
 
 app.get('/rest/stop', function(req,res) {
   request({
-      uri: GATEWAY+"/stopMusic",
-      method: "GET",
+      uri: GATEWAY+"/player/stop",
+      method: "POST",
       timeout: 1000
   }, function(error, response, body) {
       //var obj=JSON.parse(body);
@@ -187,24 +207,41 @@ app.get('/rest/stop', function(req,res) {
   res.send();
 });
 
-app.get('/rest/play/:num',function(req,res) {
-  var num = req.params.num;
+app.get('/rest/play/:titel',function(req,res) {
+  var titel = req.params.titel;
   request({
-      uri: GATEWAY+"/playMusic/"+num,
-      method: "GET",
-      timeout: 1000
+      uri: GATEWAY+"/player/play",
+      method: "POST",
+      timeout: 1000,
+      data:{
+        track:titel
+      }
   }, function(error, response, body) {
       //var obj=JSON.parse(body);
       //console.log(obj[obj.length-1]);
   });
   res.send();
+});
+
+app.get('/rest/play/list', function(req,res) {
+  request({
+      uri: GATEWAY+"/player/liste",
+      method: "POST",
+      timeout: 1000
+  }, function(error, response, body) {
+      if (error) {
+        res.send();
+        return;
+      }
+      res.send(body);
+  });
 })
 
 app.post('/rest/message', function(req,res) {
   var data = req.body;
   request({
-      uri: GATEWAY+"/messageboard",
-      method: "POST",
+      uri: GATEWAY+"/messageboard/text/",
+      method: "PUT",
       timeout: 1000,
       data: data
   }, function(error, response, body) {
@@ -212,7 +249,19 @@ app.post('/rest/message', function(req,res) {
       //console.log(obj[obj.length-1]);
   });
   res.send();
-})
+});
+
+app.delete('/rest/message', function(req,res) {
+  request({
+      uri: GATEWAY+"/messageboard/all",
+      method: "DELETE",
+      timeout: 1000
+  }, function(error, response, body) {
+      //var obj=JSON.parse(body);
+      //console.log(obj[obj.length-1]);
+  });
+  res.send();
+});
 
 app.post('/rest/servo', function(req,res) {
   var data = req.body;
@@ -227,6 +276,49 @@ app.post('/rest/servo', function(req,res) {
   });
   res.send();
 })
+
+app.get('/rest/servo', function(req,res) {
+  request({
+      uri: GATEWAY+"/mailbox/mails/",
+      method: "GET",
+      timeout: 1000
+  }, function(error, response, body) {
+    if (error || !body) {
+      res.send();
+      return;
+    }
+
+    if (body.length>20){
+      body = body.slice(Math.max(body.length - 20))
+    }
+    res.send(body);
+  });
+});
+
+app.get('/rest/servo/flag', function(req, res) {
+  request({
+      uri: GATEWAY+"/mailbox/flag/",
+      method: "GET",
+      timeout: 1000
+  }, function(error, response, body) {
+    if (err || !body) {
+      res.send();
+      return;
+    }
+    res.send({flag:body});
+  });
+
+  app.get('/rest/servo/flag', function(req, res) {
+    var data = req.body;
+    request({
+        uri: GATEWAY+"/mailbox/flag/",
+        method: "PUT",
+        timeout: 1000,
+        data:data
+    }, function(error, response, body) {
+    });
+    res.send();
+  }
 
 var server = app.listen(8080, function() {
     console.log('Example app listening on port 8080!')

@@ -37,13 +37,15 @@ summitApp.controller('SoundCtrl', function($scope,UserService,$rootScope,$http,B
       });
     };
 
-    $scope.updateDropdown = function(list) {
-      this.buttonSongs = list;
+    $scope.updateDropdown = function() {
+      $http.get(BASE_URL+'/play/list').then(function(result) {
+        this.buttonSongs = result.data;
+      });
     }
 
     $timeout(function () {
         $('select').material_select();
     });
 
-    $scope.updateDropdown( ['132.mp3','465.mp3','798.mp3','noe.mp3']);
+    $scope.updateDropdown();
 });

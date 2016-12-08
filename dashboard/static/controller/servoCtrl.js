@@ -20,7 +20,7 @@ summitApp.controller('ServoCtrl', function($scope,UserService,$rootScope,$http,B
         text:$scope.mailboxTextArea,
         timestamp:Date.now()
       }
-      $http.post(BASE_URL+'/message', message).then(function(result) {
+      $http.post(BASE_URL+'/servo', message).then(function(result) {
         console.log('done');
         $scope.mailboxEmail = "";
         $scope.mailboxTextArea = "";
@@ -30,7 +30,7 @@ summitApp.controller('ServoCtrl', function($scope,UserService,$rootScope,$http,B
       });
     }
     $scope.updateMessages = function() {
-      $http.get(BASE_URL+'/message').then(function(result) {
+      $http.get(BASE_URL+'/servo').then(function(result) {
         var data = result.data;
         if(Array.isArray(data) &&  data.length>0){
           $scope.hasData = true;
