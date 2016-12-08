@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 
 var AudioPlayer = require("./api.audioplayer");
 var LedCube =     require("./api.ledcube");
-var MessageBoard =require("./api.messagedisplay");
+var MessageBoard = require("./api.messagedisplay");
 var MailBox =     require("./api.mailbox");
 var Sensor =      require("./api.sensor");
 
@@ -40,15 +40,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var devices={};
 
-devices.LEDCUBE = {url:"192.168.137.44"};
-devices.LEDMATR = {url:"192.168.137.44"};
-devices.MAILBOX = {url:"192.168.137.44"};
-devices.SENSOR  = {url:"192.168.137.44"};
+devices.LEDCUBE = {url:"led-cube"};
+devices.LEDMATR = {url:"led-matrix"};//192.168.123.89
+devices.MAILBOX = {url:"mail-box"};
+devices.SENSOR  = {url:"sensor"};
 
 app.use(function (req, res, next) {
   console.log('Time: %d', Date.now(), "from",req.hostname);
+  console.log(req.path);
   next();
 });
+
+MessageBoard.object.setIP(devices.LEDMATR.url);
 
 app.use('/audioplayer', AudioPlayer);
 app.use('/ledcube', LedCube.router);

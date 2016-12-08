@@ -1,6 +1,18 @@
 var express = require('express');
 var router = express.Router();
 
+var low = require('lowdb');
+
+const DATA_LENGTH = 50;
+const DB_NAME = 'DB_Mailbox';
+
+//db.get(DB_NAME).push(data).value();
+
+//var data = db.get(DB_NAME).value();
+
+const db = low();
+db.set(DB_NAME, []).value();
+
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
   console.log('Time: ', Date.now());
@@ -15,13 +27,54 @@ router.get('/about', function(req, res) {
   res.send('About birds');
 });
 
+router.put('/question', function(req, res) {
+  sender = req.body.sender || "ANONYMOUS";
+  subject = "FRAGE: " +(req.body.subject || "NO-SUBJECT");
+  message = req.body.message || "MESSAGE LOST";
+  db.get(DB_NAME).push({
+    sender: sender,
+    subject: subject,
+    message: message
+  }).value();
+  res.send('Danke für die Frage');
+});
 
-var MailBox={};
+router.put('/mail', function(req, res) {
+  sender = req.body.sender || "ANONYMOUS";
+  subject = (req.body.subject || "NO-SUBJECT");
+  message = req.body.message || "MESSAGE LOST";
+  db.get(DB_NAME).push({
+    sender: sender,
+    subject: subject,
+    message: message
+  }).value();
+  res.send('Mail was sent!');
+});
 
-MailBox.IP="0.0.0.0";
+router.get('/mails', function(req, res) {
+  var data = db.get(DB_NAME).value();
+  res.send(data);
+});
 
-MailBox.setIP = function(IP){
-  MailBox.IP=IP;
+router.get('/flag', function(req, res) {
+  res.send(flagstate ? "on" : "off");
+});
+
+router.put('/flag/:state', function(req, res) {
+  flagstate = (req.param.state == "on") ? true : false;
+  res.send('Danke für die Frage');
+});
+
+
+var MailBox = {};
+
+MailBox.IP = "0.0.0.0";
+
+MailBox.setIP = function(IP) {
+  MailBox.IP = IP;
 }
 
-module.exports = {router:router,object:MailBox};
+module.exports = {
+  router: router,
+  object: MailBox
+};

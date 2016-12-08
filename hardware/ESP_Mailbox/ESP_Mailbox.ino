@@ -19,7 +19,7 @@
 
 #include "wificred.h" // wifiMulti.addAP("SSID", "PSK");
 
-SoftwareSerial swSer(14, 12, false, 256);
+SoftwareSerial swSer(-1, 12);
 
 ESP8266WebServer server(80);
 
@@ -29,7 +29,7 @@ ESP8266WebServer server(80);
 
 void handleFlag();
 void printMessage();
-
+void cutPaper();
 int flagTO=0;
 
 ESP8266WiFiMulti wifiMulti;
@@ -79,8 +79,23 @@ void setup() {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
   myservo.attach(SERVO);
+  
+  swSer.begin(9600);
+  swSer.println("Hallo Jan,");
+  swSer.println("Drucker ist bereit");
+  swSer.print("IP address: ");
+  swSer.println(WiFi.localIP());
+cutPaper();
   delay(1000);
   myservo.write(30);
+}
+
+void cutPaper(){
+  swSer.write(0x1d);
+  swSer.write(0x56);
+  swSer.write(66);
+  swSer.write(3);
+  swSer.write('\n');  
 }
 
 void printMessage() {
@@ -109,13 +124,13 @@ void handleFlag() {
 void loop() {
 
   server.handleClient();
-  //handleFlag();
+  handleFlag();
   delay(100);
   
   USE_SERIAL.println("LOOP");
-  myservo.write(90);
+  myservo.write(130);
   delay(500);
-  myservo.write(30);
+  myservo.write(40);
   delay(1500);
 
 }

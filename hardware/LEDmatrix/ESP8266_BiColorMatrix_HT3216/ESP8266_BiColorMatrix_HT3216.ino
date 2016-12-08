@@ -34,7 +34,7 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
   WiFi.disconnect();
-  
+  WiFi.hostname("LED_MATRIX");
   wifiMulti.addAP("Vogelnest", "wlanaccessatruebeshome");
   wifiMulti.addAP("Teilnehmer", "zwzukunft");
   wifiMulti.addAP("FritzOttermoor", "georgherrmannottermoorshrott");
@@ -143,29 +143,36 @@ int copytext(char msg[], uint16_t mem[], int x, int y, int offset) {
     {
       uint8_t stripe = pgm_read_byte(&FONT_5X4[i + cFirst]);
       if (x + cLen < 64) {
-        mem[x + i] = ((mem[x + i] & ~(0x00ff << y))) | (stripe << y);
+        mem[x + i] = ((mem[x + i] & ~(0b11111100 << y))) | (stripe << y);
       }
       else if (x + i < 64) {
-        mem[x + i] = ((mem[x + i] & ~(0x00ff << y)));
+        mem[x + i] = ((mem[x + i] & ~(0b11111100 << y)));
       }
     }
 
     x += cLen;
+    if(x >= 64 ){
+      return ccount;
+    }
     mem[x] = ((mem[x] & ~(0x00ff << y)));
     x++;
     ccount++;
   }
-  return ccount;
+  return -1;
 }
 
 void parseText(){
   String buf;
-  char textBuf[32];
+  int rest=-1;
+  char textBuf[64];
   if (server.hasArg("t0")) {
     buf = server.arg("t0");
-    buf.toCharArray(textBuf,32);
+    buf.toCharArray(textBuf,64);
     clearMem(fx1);
-    copytext(textBuf, fx1, 0, 8, 0);
+    rest=copytext(textBuf, fx1, 0, 7, 0);
+    if(rest >= 0){
+      copytext(textBuf, fx1, 0, 0, rest);
+    }
   }  
   server.send(200, "text/plain", "TextAnzeigen... "+buf);
 }

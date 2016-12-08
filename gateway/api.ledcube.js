@@ -7,7 +7,7 @@ var Color = {r:0,g:0,b:0};
 
 // define the home page route
 router.get('/', function(req, res) {
-  res.send('Birds home page');
+  res.send('LED-CUBE');
 });
 // define the about route
 router.get('/about', function(req, res) {
@@ -15,7 +15,7 @@ router.get('/about', function(req, res) {
 });
 
 router.get('/color', function(req, res){
-  console.log(req.body);
+  //console.log(req.body);
   res.send(Color);
 });
 
