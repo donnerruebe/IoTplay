@@ -9,7 +9,7 @@ fragenApp.controller('MainCtrl', function ($scope,$rootScope,$http,BASE_URL) {
       var message = {
         sender:$scope.mailboxEmail,
         subject:$scope.mailboxSubject,
-        text:$scope.mailboxTextArea,
+        message:$scope.mailboxTextArea,
         timestamp:Date.now()
       }
       $http.post(BASE_URL+'/message', message).then(function(result) {
@@ -31,7 +31,7 @@ fragenApp.controller('MainCtrl', function ($scope,$rootScope,$http,BASE_URL) {
         }
       });
     }
-    
+
     $scope.updateMessages();
 
 });

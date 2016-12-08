@@ -17,7 +17,7 @@ summitApp.controller('ServoCtrl', function($scope,UserService,$rootScope,$http,B
       var message = {
         sender:$scope.mailboxEmail,
         subject:$scope.mailboxSubject,
-        text:$scope.mailboxTextArea,
+        message:$scope.mailboxTextArea,
         timestamp:Date.now()
       }
       $http.post(BASE_URL+'/servo', message).then(function(result) {

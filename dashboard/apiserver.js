@@ -55,6 +55,19 @@ app.get('/talk/folie/:msg', function(req, res) {
     res.status(418).send('I’m a teapot');
     return;
   }
+  var msg = req.params.msg;
+  request({
+    uri:GATEWAY+'/messageboard/text',
+    method:'PUT',
+    timeout:1000,
+    data:{
+      text:msg
+    }
+  }, function(error,response,body) {
+      if (error) {
+        console.log(error);
+      }
+  })
   console.log(req.params);
   res.send(req.params);
 })
@@ -208,6 +221,10 @@ app.get('/rest/stop', function(req,res) {
 });
 
 app.get('/rest/play/:titel',function(req,res) {
+  if (!((isAdmin(req) && adminRights.sound)  || userRights.sound)) {
+    res.status(418).send('I’m a teapot');
+    return;
+  }
   var titel = req.params.titel;
   request({
       uri: GATEWAY+"/player/play",
@@ -224,6 +241,11 @@ app.get('/rest/play/:titel',function(req,res) {
 });
 
 app.get('/rest/play/list', function(req,res) {
+
+    if (!((isAdmin(req) && adminRights.sound)  || userRights.sound)) {
+      res.status(418).send('I’m a teapot');
+      return;
+    }
   request({
       uri: GATEWAY+"/player/liste",
       method: "POST",
@@ -265,14 +287,16 @@ app.delete('/rest/message', function(req,res) {
 
 app.post('/rest/servo', function(req,res) {
   var data = req.body;
+  console.log(data);
   request({
-      uri: GATEWAY+"/mailbox",
-      method: "POST",
+      uri: GATEWAY+"/mailbox/question/",
+      method: "PUT",
       timeout: 1000,
       data: data
   }, function(error, response, body) {
-      //var obj=JSON.parse(body);
-      //console.log(obj[obj.length-1]);
+    if (error) {
+      console.log(error);
+    }
   });
   res.send();
 })
@@ -307,6 +331,7 @@ app.get('/rest/servo/flag', function(req, res) {
     }
     res.send({flag:body});
   });
+});
 
   app.get('/rest/servo/flag', function(req, res) {
     var data = req.body;
@@ -318,7 +343,7 @@ app.get('/rest/servo/flag', function(req, res) {
     }, function(error, response, body) {
     });
     res.send();
-  }
+});
 
 var server = app.listen(8080, function() {
     console.log('Example app listening on port 8080!')

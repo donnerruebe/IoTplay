@@ -29,7 +29,7 @@ app.get('/rest/message', function(req,res) {
   }, function(error, response, body) {
     if (error || !body) {
       res.send();
-      return;
+    return;
     }
 
     if (body.length>20){
