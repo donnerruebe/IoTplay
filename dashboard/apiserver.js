@@ -7,8 +7,8 @@ var app = express()
 
 var userRights = {
   led:false,
-  age:false,
-  servo:true,
+  message:false,
+  servo:false,
   data:false,
   sound:false,
   changeRights:false
@@ -16,13 +16,12 @@ var userRights = {
 
 var adminRights = {
     led:true,
-    age:true,
+    message:true,
     servo:true,
     data:true,
     sound:true,
     changeRights:true
 }
-userRights=adminRights;
 
 var adminCookies = [];
 const COOKIE_NAME = 'summadmin';
@@ -211,7 +210,7 @@ app.post('/rest/user/rights', function(req,res){
 
 app.get('/rest/stop', function(req,res) {
   request({
-      uri: GATEWAY+"/player/stop",
+      uri: GATEWAY+"/audioplayer/stop",
       method: "POST",
       timeout: 1000
   }, function(error, response, body) {
@@ -221,17 +220,18 @@ app.get('/rest/stop', function(req,res) {
   res.send();
 });
 
-app.get('/rest/play/:titel',function(req,res) {
-  if (!((isAdmin(req) && adminRights.sound)  || userRights.sound)) {
+app.post('/rest/play',function(req,res) {
+  if (!((isAdmin(req) && adminRights.sound)  || userRights.sound) || !(req.body) || !(req.body.titel)) {
     res.status(418).send('I’m a teapot');
     return;
   }
-  var titel = req.params.titel;
+
+  var titel = req.body.titel;
   request({
-      uri: GATEWAY+"/player/play",
+      uri: GATEWAY+"/audioplayer/play",
       method: "POST",
       timeout: 1000,
-      data:{
+      json:{
         track:titel
       }
   }, function(error, response, body) {
@@ -242,16 +242,16 @@ app.get('/rest/play/:titel',function(req,res) {
 });
 
 app.get('/rest/play/list', function(req,res) {
-
     if (!((isAdmin(req) && adminRights.sound)  || userRights.sound)) {
       res.status(418).send('I’m a teapot');
       return;
     }
   request({
-      uri: GATEWAY+"/player/liste",
-      method: "POST",
+      uri: GATEWAY+"/audioplayer/liste",
+      method: "GET",
       timeout: 1000
   }, function(error, response, body) {
+    console.log(body);
       if (error) {
         res.send();
         return;
@@ -312,7 +312,13 @@ app.get('/rest/servo', function(req,res) {
       res.send();
       return;
     }
-    body=JSON.parse(body);
+    try {
+
+      body=JSON.parse(body);
+    } catch (e) {
+      res.send();
+      return;
+    }
     if (body.length>20){
       body = body.slice(Math.max(body.length - 20))
     }
@@ -340,7 +346,7 @@ app.get('/rest/servo/flag', function(req, res) {
         uri: GATEWAY+"/mailbox/flag/",
         method: "PUT",
         timeout: 1000,
-        data:data
+        json:data
     }, function(error, response, body) {
     });
     res.send();

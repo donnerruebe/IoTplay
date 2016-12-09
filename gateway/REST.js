@@ -40,10 +40,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var devices={};
 
-devices.LEDCUBE = {url:"LED_CUBE"};
-devices.LEDMATR = {url:"led_matrix"};//Läuft
-devices.MAILBOX = {url:"mail-box"};
-devices.SENSOR  = {url:"sensor"};
+devices.LEDCUBE = {url:"192.168.178.121"};
+devices.LEDMATR = {url:"192.168.178.122"};//192.168.123.89
+devices.MAILBOX = {url:"192.168.178.20"};
+devices.SENSOR  = {url:"192.168.178.124"};
+
 
 app.use(function (req, res, next) {
   console.log('Time: %d', Date.now(), "from",req.hostname);

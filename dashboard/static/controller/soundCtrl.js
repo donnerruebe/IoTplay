@@ -2,7 +2,14 @@ summitApp.controller('SoundCtrl', function($scope,UserService,$rootScope,$http,B
 
     $rootScope.pageTitle = 'Sound';
 
-    $scope.buttonSongs = [];
+    $scope.buttonSongs = [
+  "AlecEmpire.mp3",
+  "FaunFederkleid.mp3",
+  "GladiatorTheme.mp3",
+  "InExtremo.mp3"
+];
+
+ $scope.allSongs = [];
 
     var promise = UserService.getPermission();
     promise.then(function (succ) {
@@ -26,7 +33,7 @@ summitApp.controller('SoundCtrl', function($scope,UserService,$rootScope,$http,B
         songname = $scope.buttonSongs[value];
       }
       console.log(songname);
-      $http.get(BASE_URL+'/play/'+songname).then(function(result) {
+      $http.post(BASE_URL+'/play/',{titel:songname}).then(function(result) {
         console.log('done');
       });
     };
@@ -38,8 +45,10 @@ summitApp.controller('SoundCtrl', function($scope,UserService,$rootScope,$http,B
     };
 
     $scope.updateDropdown = function() {
+      console.log("Hi");
       $http.get(BASE_URL+'/play/list').then(function(result) {
-        this.buttonSongs = result.data;
+        console.log(result.data);
+        $scope.allSongs = result.data;
       });
     }
 

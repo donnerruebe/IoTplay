@@ -43,4 +43,11 @@ summitApp.controller('ServoCtrl', function($scope,UserService,$rootScope,$http,B
     }
 
     $scope.updateMessages();
+
+
+    $(document).ready(function(){
+        $('.collapsible').collapsible({
+          accordion: true
+        });
+      });
 });

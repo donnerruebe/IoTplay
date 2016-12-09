@@ -2,6 +2,8 @@ summitApp.controller('MessageCtrl', function($scope,UserService,$rootScope,$http
 
     $rootScope.pageTitle = 'MESSAGE BOARD';
     $scope.messageTextArea = '';
+
+
     var promise = UserService.getPermission();
     promise.then(function (succ) {
       $scope.isAllowed = succ.permission.message;

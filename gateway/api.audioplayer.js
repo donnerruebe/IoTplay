@@ -1,11 +1,19 @@
 var express = require('express');
 var router = express.Router();
-
+var fs = require('fs');
+const SONG_DIR = 'songs/'
 var player = require('play-sound')(opts = {})
 var audio;
 
-var track    = {track:"",position:0.1};
-var playlist = ["foo.mp3"];
+var track;
+
+function readSongs() {
+  var filenames = fs.readdirSync(SONG_DIR);
+  filenames = filenames.filter(function(file) { return file.substr(-4) === '.mp3'; })
+  return filenames;
+}
+
+var playlist = readSongs();
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -27,6 +35,7 @@ router.get('/about', function(req, res) {
 });
 
 router.get('/liste',function(req, res){
+  console.log(playlist);
   res.send(playlist);
 });
 
@@ -43,18 +52,15 @@ router.post('/play',function(req, res){
   if(audio){
     audio.kill();
   }
-  audio = player.play('foo.mp3', function(err){
+  audio = player.play(SONG_DIR+track, function(err){
     if (err) console.log('Error, but it shouldn\'t be bad at all');
   });
 
   res.send("play "+track);
 });
 
-router.post('/play',function(req, res){
-  res.send(track);
-});
-
 router.get('/stop',function(req, res){
+  console.log("Stopped player");
   if(audio){
     audio.kill();
     audio = null;
