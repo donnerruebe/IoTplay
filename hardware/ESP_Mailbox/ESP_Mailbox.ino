@@ -31,7 +31,7 @@ void handleFlag();
 void printMessage();
 void cutPaper();
 void printMode(bool fat,bool big,bool line);
-int flagTO = 0;
+int flagTO = 200;
 
 ESP8266WiFiMulti wifiMulti;
 
@@ -84,18 +84,18 @@ void setup() {
 
   swSer.begin(9600);
   printMode(false,true,true);
-  String mName = server.arg("sender");
-  swSer.println(mName);
-  
+  swSer.println("SENDER der Nachricht");
+  swSer.println("\n");
   printMode(true,false,false);
-  String mSubject = server.arg("subject");
-  swSer.println(mSubject);
+  swSer.println("TEST-BETREFF");
   
   printMode(false,false,false);
   String mMessage = server.arg("message");
-  swSer.println(mMessage);
+  swSer.println("Meine \nNachricht ist \n Etwas länger\n als erhofft");
+  printMode(true,true,true);
+  swSer.println("IP:");
   
-  cutPaper();
+  printMode(false,false,false);
   swSer.println(WiFi.localIP());
   cutPaper();
   delay(1000);
@@ -117,22 +117,23 @@ void printMode(bool fat,bool big,bool line) {
   pMode += fat?0x08:0;
   pMode += big?0x30:0;
   pMode += line?0x80:0;
+  swSer.write(pMode);
 }
 
 void printMessage() {
-  flagTO = 20;
+  flagTO = 200;
   printMode(false,true,true);
   String mName = server.arg("sender");
   swSer.println(mName);
-  
+  swSer.println("\n");
   printMode(true,false,false);
   String mSubject = server.arg("subject");
   swSer.println(mSubject);
-  
+  swSer.println("\n");
   printMode(false,false,false);
   String mMessage = server.arg("message");
   swSer.println(mMessage);
-  
+  swSer.println("\n");
   cutPaper();
   server.send(200, "text/plain", "OK");
 }
@@ -142,7 +143,6 @@ int pos = 0;
 void handleFlag() {
   if (flagTO > 0) {
     myservo.write(130);
-    delay(100);
     flagTO--;
   } else {
     myservo.write(40);
@@ -153,7 +153,7 @@ void loop() {
 
   server.handleClient();
   handleFlag();
-  delay(100);
+  delay(50);
 
 }
 

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var low = require('lowdb');
+var request = require("request");
 
 const DATA_LENGTH = 50;
 const DB_NAME = 'DB_Mailbox';
@@ -36,6 +37,18 @@ router.get('/', function(req, res) {
 router.get('/about', function(req, res) {
   res.send('About birds');
 });
+
+var printMessage = function(sender,subject,message){
+  printData="sender="+sender+"&subject="+subject+"&message="+message;
+  request({
+  uri: "http://"+MailBox.IP+"/print/?"+printData,
+  method: "GET",
+  timeout: 1000,
+}, function(error, response, body) {
+  console.log(error||response);
+  //console.log(obj[obj.length-1]);
+});
+}
 
 router.put('/question', function(req, res) {
   sender = req.body.sender || "ANONYMOUS";
