@@ -25,9 +25,9 @@ router.put('/color', function(req, res){
   Color.g=req.body.g||0;
   Color.b=req.body.b||0;
   param="r="+Color.r+"&g="+Color.g+"&b="+Color.b;
-  console.log("http://"+devices.LEDCUBE.url+"/rgb?"+param);
+  console.log("http://"+LedCube.IP+"/led/rgb?"+param);
   request({
-  uri: "http://"+devices.LEDCUBE.url+"/led/rgb?"+param,
+  uri: "http://"+LedCube.IP+"/led/rgb?"+param,
   method: "GET",
   timeout: 1000,
 }, function(error, response, body) {
@@ -45,7 +45,7 @@ router.post('/switch', function(req, res) {
     state="on";
   }
   request({
-  uri: "http://"+devices.LEDCUBE.url+"/"+state,
+  uri: "http://"+LedCube.IP+"/"+state,
   method: "GET",
   timeout: 1000,
 }, function(error, response, body) {

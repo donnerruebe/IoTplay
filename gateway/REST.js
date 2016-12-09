@@ -40,8 +40,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var devices={};
 
-devices.LEDCUBE = {url:"led-cube"};
-devices.LEDMATR = {url:"led-matrix"};//192.168.123.89
+devices.LEDCUBE = {url:"LED_CUBE"};
+devices.LEDMATR = {url:"led_matrix"};//Läuft
 devices.MAILBOX = {url:"mail-box"};
 devices.SENSOR  = {url:"sensor"};
 
@@ -51,7 +51,10 @@ app.use(function (req, res, next) {
   next();
 });
 
+LedCube.object.setIP(devices.LEDCUBE.url);
 MessageBoard.object.setIP(devices.LEDMATR.url);
+MailBox.object.setIP(devices.MAILBOX.url);
+Sensor.object.setIP(devices.SENSOR.url);
 
 app.use('/audioplayer', AudioPlayer);
 app.use('/ledcube', LedCube.router);

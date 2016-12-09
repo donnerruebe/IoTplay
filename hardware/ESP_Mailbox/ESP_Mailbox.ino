@@ -30,7 +30,8 @@ ESP8266WebServer server(80);
 void handleFlag();
 void printMessage();
 void cutPaper();
-int flagTO=0;
+void printMode(bool fat,bool big,bool line);
+int flagTO = 0;
 
 ESP8266WiFiMulti wifiMulti;
 
@@ -41,20 +42,21 @@ Servo myservo;  // create servo object to control a servo
 void setup() {
   WiFi.persistent(false);
   WiFi.disconnect();
+  WiFi.hostname("Mailbox");
   delay(200);
-    // attaches the servo on GIO2 to the servo object
+  // attaches the servo on GIO2 to the servo object
   USE_SERIAL.begin(115200);
   // USE_SERIAL.setDebugOutput(true);
 
   USE_SERIAL.println("SETUP");
   delay(200);
-  
+
   FirstAP1
   FirstAP4
 
   USE_SERIAL.println();
   USE_SERIAL.println();
-  
+
   byte x = 0;
   while (wifiMulti.run() != WL_CONNECTED) {          // DO until connected
     delay(500);
@@ -79,45 +81,71 @@ void setup() {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
   myservo.attach(SERVO);
-  
+
   swSer.begin(9600);
-  swSer.println("Hallo Jan,");
-  swSer.println("Drucker ist bereit");
-  swSer.print("IP address: ");
+  printMode(false,true,true);
+  String mName = server.arg("sender");
+  swSer.println(mName);
+  
+  printMode(true,false,false);
+  String mSubject = server.arg("subject");
+  swSer.println(mSubject);
+  
+  printMode(false,false,false);
+  String mMessage = server.arg("message");
+  swSer.println(mMessage);
+  
+  cutPaper();
   swSer.println(WiFi.localIP());
-cutPaper();
+  cutPaper();
   delay(1000);
   myservo.write(30);
 }
 
-void cutPaper(){
+void cutPaper() {
   swSer.write(0x1d);
   swSer.write(0x56);
   swSer.write(66);
   swSer.write(3);
-  swSer.write('\n');  
+  swSer.write('\n');
+}
+
+void printMode(bool fat,bool big,bool line) {
+  swSer.write(0x1b);
+  swSer.write(0x21);
+  byte pMode = 0;
+  pMode += fat?0x08:0;
+  pMode += big?0x30:0;
+  pMode += line?0x80:0;
 }
 
 void printMessage() {
   flagTO = 20;
+  printMode(false,true,true);
+  String mName = server.arg("sender");
+  swSer.println(mName);
+  
+  printMode(true,false,false);
+  String mSubject = server.arg("subject");
+  swSer.println(mSubject);
+  
+  printMode(false,false,false);
+  String mMessage = server.arg("message");
+  swSer.println(mMessage);
+  
+  cutPaper();
   server.send(200, "text/plain", "OK");
 }
 
-int pos=0;
+int pos = 0;
 
 void handleFlag() {
   if (flagTO > 0) {
-    for (int i = 0; i < 2; i++) {
-      for (pos = 30; pos <= 120; pos += 2) // goes from 0 degrees to 180 degrees
-      { // in steps of 1 degree
-        myservo.write(pos);              // tell servo to go to position in variable 'pos'
-        delay(6);                       // waits 15ms for the servo to reach the position
-      }
-
-    }
+    myservo.write(130);
+    delay(100);
     flagTO--;
-  }else{
-  myservo.write(90);
+  } else {
+    myservo.write(40);
   }
 }
 
@@ -126,12 +154,6 @@ void loop() {
   server.handleClient();
   handleFlag();
   delay(100);
-  
-  USE_SERIAL.println("LOOP");
-  myservo.write(130);
-  delay(500);
-  myservo.write(40);
-  delay(1500);
 
 }
 
