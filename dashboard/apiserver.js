@@ -352,7 +352,7 @@ app.get('/rest/servo/flag', function(req, res) {
     res.send();
 });
 
-var server = app.listen(8080, function() {
+var server = app.listen(8090, function() {
     console.log('Example app listening on port 8080!')
 })
 

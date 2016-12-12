@@ -59,11 +59,11 @@ router.post('/play',function(req, res){
   res.send("play "+track);
 });
 
-router.get('/stop',function(req, res){
+router.post('/stop',function(req, res){
   console.log("Stopped player");
   if(audio){
     audio.kill();
-    audio = null;
+    audio = undefined;
   }
   res.send();
 });
