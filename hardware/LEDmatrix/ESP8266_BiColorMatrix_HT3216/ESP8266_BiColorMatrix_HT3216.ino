@@ -35,10 +35,8 @@ void setup() {
   Serial.begin(115200);
   WiFi.disconnect();
   WiFi.hostname("LED_MATRIX");
-  wifiMulti.addAP("Vogelnest", "wlanaccessatruebeshome");
-  wifiMulti.addAP("Teilnehmer", "zwzukunft");
-  wifiMulti.addAP("FritzOttermoor", "georgherrmannottermoorshrott");
-  wifiMulti.addAP("summit16IOT", "iotdemowlan");
+  wifiMulti.addAP("SSID", "PSK");
+
 
   USE_SERIAL.println();
   USE_SERIAL.println();
@@ -60,7 +58,7 @@ void setup() {
   char result[16];
   sprintf(result, "%d.%d.%d.%d", WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], WiFi.localIP()[3]);
   clearMem(fx2);
-  copytext(result,fx2,0,7,0);  
+  copytext(result,fx2,0,7,0);
   display.renderMemory(fx2, fx2);
 
   server.on("/", []() {
@@ -173,7 +171,7 @@ void parseText(){
     if(rest >= 0){
       copytext(textBuf, fx1, 0, 0, rest);
     }
-  }  
+  }
   server.send(200, "text/plain", "TextAnzeigen... "+buf);
 }
 

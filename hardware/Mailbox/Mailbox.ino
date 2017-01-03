@@ -17,7 +17,7 @@
 
 #include "SoftwareSerial.h" // FROM https://github.com/plerup/espsoftwareserial
 
-#include "wificred.h" // wifiMulti.addAP("SSID", "PSK");
+//#include "wificred.h" // wifiMulti.addAP("SSID", "PSK");
 
 SoftwareSerial swSer(-1, 12);
 
@@ -51,8 +51,7 @@ void setup() {
   USE_SERIAL.println("SETUP");
   delay(200);
 
-  FirstAP1
-  FirstAP4
+  wifiMulti.addAP("SSID", "PSK");
 
   USE_SERIAL.println();
   USE_SERIAL.println();
@@ -88,13 +87,13 @@ void setup() {
   swSer.println("\n");
   printMode(true,false,false);
   swSer.println("TEST-BETREFF");
-  
+
   printMode(false,false,false);
   String mMessage = server.arg("message");
   swSer.println("Meine \nNachricht ist \n Etwas länger\n als erhofft");
   printMode(true,true,true);
   swSer.println("IP:");
-  
+
   printMode(false,false,false);
   swSer.println(WiFi.localIP());
   cutPaper();
@@ -156,4 +155,3 @@ void loop() {
   delay(50);
 
 }
-
